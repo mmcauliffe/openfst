@@ -17978,10 +17978,8 @@ libfstdir=$with_libfstdir
 # or when someone does not run `make check`.
 if test "$cross_compiling" = yes
 then :
-  { { printf "%s\n" "$as_me:${as_lineno-$LINENO}: error: in \`$ac_pwd':" >&5
-printf "%s\n" "$as_me: error: in \`$ac_pwd':" >&2;}
-as_fn_error $? "cannot run test program while cross compiling
-See \`config.log' for more details" "$LINENO" 5; }
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: skipping float equality test" >&5
+printf "%s\n" "$as_me: skipping float equality test" >&2;}
 else $as_nop
   cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
