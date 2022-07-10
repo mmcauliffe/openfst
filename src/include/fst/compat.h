@@ -42,6 +42,28 @@
 
 void FailedNewHandler();
 
+#ifdef _WIN32
+
+inline uint64_t ctzll(uint64_t input_int) {
+  return  _tzcnt_u64(input_int);
+}
+
+inline uint64_t popcountll(uint64_t input_int) {
+  return  __popcnt64(input_int);
+}
+
+#else
+
+inline uint64_t ctzll(uint64_t input_int) {
+  return  __builtin_ctzll(input_int);
+}
+
+inline uint64_t popcountll(uint64_t input_int) {
+  return  __builtin_popcountll(input_int);
+}
+
+#endif
+
 namespace fst {
 
 // Downcasting.

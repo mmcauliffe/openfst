@@ -28,16 +28,16 @@
 #include <fstream>
 #include <fst/script/compile.h>
 
-DECLARE_bool(acceptor);
-DECLARE_string(arc_type);
-DECLARE_string(fst_type);
-DECLARE_string(isymbols);
-DECLARE_string(osymbols);
-DECLARE_string(ssymbols);
-DECLARE_bool(keep_isymbols);
-DECLARE_bool(keep_osymbols);
-DECLARE_bool(keep_state_numbering);
-DECLARE_bool(allow_negative_labels);
+DECLARE_EXE_bool(acceptor);
+DECLARE_EXE_string(arc_type);
+DECLARE_EXE_string(fst_type);
+DECLARE_EXE_string(isymbols);
+DECLARE_EXE_string(osymbols);
+DECLARE_EXE_string(ssymbols);
+DECLARE_EXE_bool(keep_isymbols);
+DECLARE_EXE_bool(keep_osymbols);
+DECLARE_EXE_bool(keep_state_numbering);
+DECLARE_EXE_bool(allow_negative_labels);
 
 int fstcompile_main(int argc, char **argv) {
   namespace s = fst::script;

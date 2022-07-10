@@ -29,10 +29,10 @@
 #include <fst/script/shortest-distance.h>
 #include <fst/script/text-io.h>
 
-DECLARE_bool(reverse);
-DECLARE_double(delta);
-DECLARE_int64(nstate);
-DECLARE_string(queue_type);
+DECLARE_EXE_bool(reverse);
+DECLARE_EXE_double(delta);
+DECLARE_EXE_int64(nstate);
+DECLARE_EXE_string(queue_type);
 
 int fstshortestdistance_main(int argc, char **argv) {
   namespace s = fst::script;

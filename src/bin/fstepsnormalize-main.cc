@@ -25,7 +25,7 @@
 #include <fst/script/epsnormalize.h>
 #include <fst/script/getters.h>
 
-DECLARE_string(eps_norm_type);
+DECLARE_EXE_string(eps_norm_type);
 
 int fstepsnormalize_main(int argc, char **argv) {
   namespace s = fst::script;

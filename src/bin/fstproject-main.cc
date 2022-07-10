@@ -25,7 +25,7 @@
 #include <fst/script/getters.h>
 #include <fst/script/project.h>
 
-DECLARE_string(project_type);
+DECLARE_EXE_string(project_type);
 
 int fstproject_main(int argc, char **argv) {
   namespace s = fst::script;

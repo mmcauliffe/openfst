@@ -26,11 +26,11 @@
 #include <fst/script/getters.h>
 #include <fst/script/rmepsilon.h>
 
-DECLARE_bool(connect);
-DECLARE_double(delta);
-DECLARE_int64(nstate);
-DECLARE_string(queue_type);
-DECLARE_string(weight);
+DECLARE_EXE_bool(connect);
+DECLARE_EXE_double(delta);
+DECLARE_EXE_int64(nstate);
+DECLARE_EXE_string(queue_type);
+DECLARE_EXE_string(weight);
 
 int fstrmepsilon_main(int argc, char **argv) {
   namespace s = fst::script;

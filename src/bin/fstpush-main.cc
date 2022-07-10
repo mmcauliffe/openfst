@@ -26,12 +26,12 @@
 #include <fst/script/getters.h>
 #include <fst/script/push.h>
 
-DECLARE_double(delta);
-DECLARE_bool(push_weights);
-DECLARE_bool(push_labels);
-DECLARE_bool(remove_total_weight);
-DECLARE_bool(remove_common_affix);
-DECLARE_string(reweight_type);
+DECLARE_EXE_double(delta);
+DECLARE_EXE_bool(push_weights);
+DECLARE_EXE_bool(push_labels);
+DECLARE_EXE_bool(remove_total_weight);
+DECLARE_EXE_bool(remove_common_affix);
+DECLARE_EXE_string(reweight_type);
 
 int fstpush_main(int argc, char **argv) {
   namespace s = fst::script;

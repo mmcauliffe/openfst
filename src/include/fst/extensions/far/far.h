@@ -36,6 +36,16 @@
 #include <fst/vector-fst.h>
 #include <string_view>
 
+#ifdef _WIN32
+
+inline std::string basename(std::string const & path)
+{
+  return path.substr(path.find_last_of("/\\") + 1);
+}
+#else
+#include <libgen.h>
+#endif
+
 namespace fst {
 
 enum class FarEntryType { LINE, FILE };

@@ -25,12 +25,12 @@
 #include <fst/script/determinize.h>
 #include <fst/script/getters.h>
 
-DECLARE_double(delta);
-DECLARE_string(weight);
-DECLARE_int64(nstate);
-DECLARE_int64(subsequential_label);
-DECLARE_string(det_type);
-DECLARE_bool(increment_subsequential_label);
+DECLARE_EXE_double(delta);
+DECLARE_EXE_string(weight);
+DECLARE_EXE_int64(nstate);
+DECLARE_EXE_int64(subsequential_label);
+DECLARE_EXE_string(det_type);
+DECLARE_EXE_bool(increment_subsequential_label);
 
 int fstdeterminize_main(int argc, char **argv) {
   namespace s = fst::script;

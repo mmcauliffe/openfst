@@ -26,7 +26,7 @@
 #include <fst/script/arcsort.h>
 #include <fst/script/getters.h>
 
-DECLARE_string(sort_type);
+DECLARE_EXE_string(sort_type);
 
 int fstarcsort_main(int argc, char **argv) {
   namespace s = fst::script;

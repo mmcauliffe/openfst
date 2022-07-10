@@ -86,6 +86,8 @@
 //
 // The select indices have 6.25% overhead together.
 
+
+
 namespace fst {
 
 class BitmapIndex {

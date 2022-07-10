@@ -26,10 +26,10 @@
 #include <fst/script/encode.h>
 #include <fst/script/getters.h>
 
-DECLARE_bool(decode);
-DECLARE_bool(encode_labels);
-DECLARE_bool(encode_weights);
-DECLARE_bool(encode_reuse);
+DECLARE_EXE_bool(decode);
+DECLARE_EXE_bool(encode_labels);
+DECLARE_EXE_bool(encode_weights);
+DECLARE_EXE_bool(encode_reuse);
 
 int fstencode_main(int argc, char **argv) {
   namespace s = fst::script;

@@ -29,6 +29,7 @@
 #include <fst/connect.h>
 #include <fst/dfs-visit.h>
 #include <fst/fst.h>
+#include <fst/properties.h>
 #include <fst/lookahead-matcher.h>
 #include <fst/matcher.h>
 #include <fst/queue.h>

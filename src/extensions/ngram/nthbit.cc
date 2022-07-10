@@ -235,7 +235,7 @@ static const uint8_t nth_bit_bit_pos[8][256] = {
 uint32_t nth_bit(const uint64_t v, uint32_t r) {
   DCHECK_NE(v, 0);
   DCHECK_LE(0, r);
-  DCHECK_LT(r, __builtin_popcountll(v));
+  DCHECK_LT(r, popcountll(v));
 
   uint32_t next_byte = v & 255;
   uint32_t byte_popcount = nth_bit_bit_count[next_byte];

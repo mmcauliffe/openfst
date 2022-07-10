@@ -29,15 +29,15 @@
 #include <fst/script/relabel.h>
 #include <fst/script/weight-class.h>
 
-DECLARE_string(isymbols);
-DECLARE_string(osymbols);
-DECLARE_string(relabel_isymbols);
-DECLARE_string(relabel_osymbols);
-DECLARE_string(relabel_ipairs);
-DECLARE_string(relabel_opairs);
-DECLARE_string(unknown_isymbol);
-DECLARE_string(unknown_osymbol);
-DECLARE_bool(allow_negative_labels);
+DECLARE_EXE_string(isymbols);
+DECLARE_EXE_string(osymbols);
+DECLARE_EXE_string(relabel_isymbols);
+DECLARE_EXE_string(relabel_osymbols);
+DECLARE_EXE_string(relabel_ipairs);
+DECLARE_EXE_string(relabel_opairs);
+DECLARE_EXE_string(unknown_isymbol);
+DECLARE_EXE_string(unknown_osymbol);
+DECLARE_EXE_bool(allow_negative_labels);
 
 int fstrelabel_main(int argc, char **argv) {
   namespace s = fst::script;

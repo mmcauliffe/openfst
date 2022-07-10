@@ -28,6 +28,7 @@
 #include <fst/compat.h>
 #include <fst/log.h>
 #include <string_view>
+#include <fst/fst_Export.h>
 
 namespace fst {
 
@@ -491,7 +492,7 @@ uint64_t AddArcProperties(uint64_t inprops, typename Arc::StateId s,
 
 namespace internal {
 
-extern const std::string_view PropertyNames[];
+extern const std::string_view fst_EXPORT PropertyNames[];
 
 // For a binary property, the bit is always returned set. For a trinary (i.e.,
 // two-bit) property, both bits are returned set iff either corresponding input

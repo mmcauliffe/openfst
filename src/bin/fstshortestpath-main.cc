@@ -27,12 +27,12 @@
 #include <fst/script/getters.h>
 #include <fst/script/shortest-path.h>
 
-DECLARE_double(delta);
-DECLARE_int32(nshortest);
-DECLARE_int64(nstate);
-DECLARE_string(queue_type);
-DECLARE_bool(unique);
-DECLARE_string(weight);
+DECLARE_EXE_double(delta);
+DECLARE_EXE_int32(nshortest);
+DECLARE_EXE_int64(nstate);
+DECLARE_EXE_string(queue_type);
+DECLARE_EXE_bool(unique);
+DECLARE_EXE_string(weight);
 
 int fstshortestpath_main(int argc, char **argv) {
   namespace s = fst::script;

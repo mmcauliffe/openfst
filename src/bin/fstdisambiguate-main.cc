@@ -24,10 +24,10 @@
 #include <fst/flags.h>
 #include <fst/script/disambiguate.h>
 
-DECLARE_double(delta);
-DECLARE_int64(nstate);
-DECLARE_string(weight);
-DECLARE_int64(subsequential_label);
+DECLARE_EXE_double(delta);
+DECLARE_EXE_int64(nstate);
+DECLARE_EXE_string(weight);
+DECLARE_EXE_int64(subsequential_label);
 
 int fstdisambiguate_main(int argc, char **argv) {
   namespace s = fst::script;

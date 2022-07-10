@@ -26,8 +26,8 @@
 #include <fst/script/difference.h>
 #include <fst/script/getters.h>
 
-DECLARE_string(compose_filter);
-DECLARE_bool(connect);
+DECLARE_EXE_string(compose_filter);
+DECLARE_EXE_bool(connect);
 
 int fstdifference_main(int argc, char **argv) {
   namespace s = fst::script;

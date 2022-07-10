@@ -31,6 +31,7 @@
 #include <utility>
 
 #include <fst/lock.h>
+#include <fst/fst_Export.h>
 
 // FLAGS USAGE:
 //
@@ -49,12 +50,19 @@
 //
 // ShowUsage() can be used to print out command and flag usage.
 
-#define DECLARE_bool(name) extern bool FST_FLAGS_ ## name
-#define DECLARE_string(name) extern std::string FST_FLAGS_##name
-#define DECLARE_int32(name) extern int32_t FST_FLAGS_##name
-#define DECLARE_int64(name) extern int64_t FST_FLAGS_##name
-#define DECLARE_uint64(name) extern uint64_t FST_FLAGS_##name
-#define DECLARE_double(name) extern double FST_FLAGS_ ## name
+#define DECLARE_bool(name) extern bool fst_EXPORT FST_FLAGS_ ## name
+#define DECLARE_string(name) extern std::string fst_EXPORT FST_FLAGS_##name
+#define DECLARE_int32(name) extern int32_t fst_EXPORT FST_FLAGS_##name
+#define DECLARE_int64(name) extern int64_t fst_EXPORT FST_FLAGS_##name
+#define DECLARE_uint64(name) extern uint64_t fst_EXPORT FST_FLAGS_##name
+#define DECLARE_double(name) extern double fst_EXPORT FST_FLAGS_ ## name
+
+#define DECLARE_EXE_bool(name) extern bool FST_FLAGS_ ## name
+#define DECLARE_EXE_string(name) extern std::string FST_FLAGS_##name
+#define DECLARE_EXE_int32(name) extern int32_t FST_FLAGS_##name
+#define DECLARE_EXE_int64(name) extern int64_t FST_FLAGS_##name
+#define DECLARE_EXE_uint64(name) extern uint64_t FST_FLAGS_##name
+#define DECLARE_EXE_double(name) extern double FST_FLAGS_ ## name
 
 template <typename T>
 struct FlagDescription {
@@ -202,7 +210,7 @@ class FlagRegisterer {
 
 #define DEFINE_bool(name, value, doc) DEFINE_VAR(bool, name, value, doc)
 #define DEFINE_string(name, value, doc) \
-  DEFINE_VAR(std::string, name, value, doc)
+ DEFINE_VAR(std::string, name, value, doc)
 #define DEFINE_int32(name, value, doc) DEFINE_VAR(int32_t, name, value, doc)
 #define DEFINE_int64(name, value, doc) DEFINE_VAR(int64_t, name, value, doc)
 #define DEFINE_uint64(name, value, doc) DEFINE_VAR(uint64_t, name, value, doc)

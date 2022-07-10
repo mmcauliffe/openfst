@@ -83,7 +83,7 @@ class FstRegister : public GenericRegister<std::string, FstRegisterEntry<Arc>,
 // The type must have a default constructor and a copy constructor from
 // Fst<Arc>.
 template <class FST>
-class FstRegisterer : public GenericRegisterer<FstRegister<typename FST::Arc>> {
+class  FstRegisterer : public GenericRegisterer<FstRegister<typename FST::Arc>> {
  public:
   using Arc = typename FST::Arc;
   using Entry = typename FstRegister<Arc>::Entry;
