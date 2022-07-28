@@ -25,7 +25,6 @@
 #include <fst/script/fst-class.h>
 #include <fst/script/print-impl.h>
 
-DECLARE_string(fst_field_separator);
 
 namespace fst {
 namespace script {

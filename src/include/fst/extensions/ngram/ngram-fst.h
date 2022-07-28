@@ -1032,5 +1032,11 @@ class ArcIterator<NGramFst<A>> : public ArcIteratorBase<A> {
   uint8_t flags_;
 };
 
+#ifdef _WIN32
+
+inline static FstRegisterer<NGramFst<StdArc>> NGramFst_StdArc_registerer;
+inline static FstRegisterer<NGramFst<LogArc>> NGramFst_LogArc_registerer;
+#endif
+
 }  // namespace fst
 #endif  // FST_EXTENSIONS_NGRAM_NGRAM_FST_H_

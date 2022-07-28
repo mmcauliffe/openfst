@@ -48,8 +48,6 @@ void Compose(const FstClass &ifst1, const FstClass &ifst2,
   Apply<Operation<MPdtComposeArgs>>("Compose", ifst1.ArcType(), &args);
 }
 
-REGISTER_FST_OPERATION_3ARCS(Compose, MPdtComposeArgs);
-
 void Expand(const FstClass &ifst,
             const std::vector<std::pair<int64_t, int64_t>> &parens,
             const std::vector<int64_t> &assignments, MutableFstClass *ofst,
@@ -58,7 +56,6 @@ void Expand(const FstClass &ifst,
   Apply<Operation<MPdtExpandArgs>>("Expand", ifst.ArcType(), &args);
 }
 
-REGISTER_FST_OPERATION_3ARCS(Expand, MPdtExpandArgs);
 
 void Expand(const FstClass &ifst,
             const std::vector<std::pair<int64_t, int64_t>> &parens,
@@ -74,7 +71,6 @@ void Reverse(const FstClass &ifst,
   Apply<Operation<MPdtReverseArgs>>("Reverse", ifst.ArcType(), &args);
 }
 
-REGISTER_FST_OPERATION_3ARCS(Reverse, MPdtReverseArgs);
 
 void Info(const FstClass &ifst,
           const std::vector<std::pair<int64_t, int64_t>> &parens,
@@ -83,7 +79,13 @@ void Info(const FstClass &ifst,
   Apply<Operation<MPdtInfoArgs>>("Info", ifst.ArcType(), &args);
 }
 
+#ifndef _WIN32
+REGISTER_FST_OPERATION_3ARCS(Compose, MPdtComposeArgs);
+
+REGISTER_FST_OPERATION_3ARCS(Expand, MPdtExpandArgs);
+REGISTER_FST_OPERATION_3ARCS(Reverse, MPdtReverseArgs);
 REGISTER_FST_OPERATION_3ARCS(Info, MPdtInfoArgs);
+#endif
 
 }  // namespace script
 }  // namespace fst

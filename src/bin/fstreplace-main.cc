@@ -29,10 +29,10 @@
 #include <fst/script/getters.h>
 #include <fst/script/replace.h>
 
-DECLARE_EXE_string(call_arc_labeling);
-DECLARE_EXE_string(return_arc_labeling);
-DECLARE_EXE_int64(return_label);
-DECLARE_EXE_bool(epsilon_on_replace);
+DECLARE_string(call_arc_labeling);
+DECLARE_string(return_arc_labeling);
+DECLARE_int64(return_label);
+DECLARE_bool(epsilon_on_replace);
 
 int fstreplace_main(int argc, char **argv) {
   namespace s = fst::script;

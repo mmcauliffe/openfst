@@ -31,7 +31,7 @@
 #include <fst/shortest-distance.h>
 #include <fst/string.h>
 
-DECLARE_string(far_field_separator);
+DECLARE_export_string(far_field_separator, fstfarscript_EXPORT);
 
 namespace fst {
 

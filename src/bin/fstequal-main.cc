@@ -25,7 +25,7 @@
 #include <fst/log.h>
 #include <fst/script/equal.h>
 
-DECLARE_EXE_double(delta);
+DECLARE_double(delta);
 
 int fstequal_main(int argc, char **argv) {
   namespace s = fst::script;

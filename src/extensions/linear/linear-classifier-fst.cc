@@ -22,5 +22,9 @@ using fst::LinearClassifierFst;
 using fst::LogArc;
 using fst::StdArc;
 
+#ifndef _WIN32
 REGISTER_FST(LinearClassifierFst, StdArc);
 REGISTER_FST(LinearClassifierFst, LogArc);
+#endif
+
+

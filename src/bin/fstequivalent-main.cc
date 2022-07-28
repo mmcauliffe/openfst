@@ -27,12 +27,12 @@
 #include <fst/script/getters.h>
 #include <fst/script/randequivalent.h>
 
-DECLARE_EXE_double(delta);
-DECLARE_EXE_bool(random);
-DECLARE_EXE_int32(max_length);
-DECLARE_EXE_int32(npath);
-DECLARE_EXE_uint64(seed);
-DECLARE_EXE_string(select);
+DECLARE_double(delta);
+DECLARE_bool(random);
+DECLARE_int32(max_length);
+DECLARE_int32(npath);
+DECLARE_uint64(seed);
+DECLARE_string(select);
 
 int fstequivalent_main(int argc, char **argv) {
   namespace s = fst::script;

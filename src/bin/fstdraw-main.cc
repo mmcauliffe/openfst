@@ -28,23 +28,23 @@
 #include <fstream>
 #include <fst/script/draw.h>
 
-DECLARE_EXE_bool(acceptor);
-DECLARE_EXE_string(isymbols);
-DECLARE_EXE_string(osymbols);
-DECLARE_EXE_string(ssymbols);
-DECLARE_EXE_bool(numeric);
-DECLARE_EXE_int32(precision);
-DECLARE_EXE_string(float_format);
-DECLARE_EXE_bool(show_weight_one);
-DECLARE_EXE_string(title);
-DECLARE_EXE_bool(portrait);
-DECLARE_EXE_bool(vertical);
-DECLARE_EXE_int32(fontsize);
-DECLARE_EXE_double(height);
-DECLARE_EXE_double(width);
-DECLARE_EXE_double(nodesep);
-DECLARE_EXE_double(ranksep);
-DECLARE_EXE_bool(allow_negative_labels);
+DECLARE_bool(acceptor);
+DECLARE_string(isymbols);
+DECLARE_string(osymbols);
+DECLARE_string(ssymbols);
+DECLARE_bool(numeric);
+DECLARE_int32(precision);
+DECLARE_string(float_format);
+DECLARE_bool(show_weight_one);
+DECLARE_string(title);
+DECLARE_bool(portrait);
+DECLARE_bool(vertical);
+DECLARE_int32(fontsize);
+DECLARE_double(height);
+DECLARE_double(width);
+DECLARE_double(nodesep);
+DECLARE_double(ranksep);
+DECLARE_bool(allow_negative_labels);
 
 int fstdraw_main(int argc, char **argv) {
   namespace s = fst::script;

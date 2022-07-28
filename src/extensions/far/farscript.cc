@@ -59,15 +59,12 @@ void CompileStrings(const std::vector<std::string> &sources,
                                           &args);
 }
 
-REGISTER_FST_OPERATION_4ARCS(CompileStrings, FarCompileStringsArgs);
-
 void Convert(FarReaderClass &reader, FarWriterClass &writer,
              std::string_view fst_type) {
   FarConvertArgs args{reader, writer, fst_type};
   Apply<Operation<FarConvertArgs>>("Convert", reader.ArcType(), &args);
 }
 
-REGISTER_FST_OPERATION_4ARCS(Convert, FarConvertArgs);
 
 void Create(const std::vector<std::string> &sources, FarWriterClass &writer,
             const int32_t generate_keys, const std::string &key_prefix,
@@ -76,7 +73,7 @@ void Create(const std::vector<std::string> &sources, FarWriterClass &writer,
   Apply<Operation<FarCreateArgs>>("Create", writer.ArcType(), &args);
 }
 
-REGISTER_FST_OPERATION_4ARCS(Create, FarCreateArgs);
+
 
 void Decode(FarReaderClass &reader, FarWriterClass &writer,
             const EncodeMapperClass &encoder) {
@@ -88,7 +85,6 @@ void Decode(FarReaderClass &reader, FarWriterClass &writer,
   Apply<Operation<FarDecodeArgs>>("Decode", reader.ArcType(), &args);
 }
 
-REGISTER_FST_OPERATION_4ARCS(Decode, FarDecodeArgs);
 
 void Encode(FarReaderClass &reader, FarWriterClass &writer,
             EncodeMapperClass *encoder) {
@@ -100,7 +96,6 @@ void Encode(FarReaderClass &reader, FarWriterClass &writer,
   Apply<Operation<FarEncodeArgs>>("Encode", reader.ArcType(), &args);
 }
 
-REGISTER_FST_OPERATION_4ARCS(Encode, FarEncodeArgs);
 
 bool Equal(FarReaderClass &reader1, FarReaderClass &reader2, float delta,
            std::string_view begin_key, std::string_view end_key) {
@@ -111,7 +106,6 @@ bool Equal(FarReaderClass &reader1, FarReaderClass &reader2, float delta,
   return args_with_retval.retval;
 }
 
-REGISTER_FST_OPERATION_4ARCS(Equal, FarEqualArgs);
 
 void Extract(FarReaderClass &reader, int32_t generate_sources,
              const std::string &keys, const std::string &key_separator,
@@ -124,8 +118,6 @@ void Extract(FarReaderClass &reader, int32_t generate_sources,
   Apply<Operation<FarExtractArgs>>("Extract", reader.ArcType(), &args);
 }
 
-REGISTER_FST_OPERATION_4ARCS(Extract, FarExtractArgs);
-
 void GetInfo(const std::vector<std::string> &sources,
              const std::string &arc_type, const std::string &begin_key,
              const std::string &end_key, bool list_fsts, FarInfoData *data) {
@@ -133,7 +125,6 @@ void GetInfo(const std::vector<std::string> &sources,
   Apply<Operation<FarGetInfoArgs>>("GetInfo", arc_type, &args);
 }
 
-REGISTER_FST_OPERATION_4ARCS(GetInfo, FarGetInfoArgs);
 
 void Info(const std::vector<std::string> &sources, const std::string &arc_type,
           const std::string &begin_key, const std::string &end_key,
@@ -142,7 +133,6 @@ void Info(const std::vector<std::string> &sources, const std::string &arc_type,
   Apply<Operation<FarInfoArgs>>("Info", arc_type, &args);
 }
 
-REGISTER_FST_OPERATION_4ARCS(Info, FarInfoArgs);
 
 bool Isomorphic(FarReaderClass &reader1, FarReaderClass &reader2, float delta,
                 std::string_view begin_key, std::string_view end_key) {
@@ -153,8 +143,6 @@ bool Isomorphic(FarReaderClass &reader1, FarReaderClass &reader2, float delta,
                                       &args_with_retval);
   return args_with_retval.retval;
 }
-
-REGISTER_FST_OPERATION_4ARCS(Isomorphic, FarIsomorphicArgs);
 
 void PrintStrings(FarReaderClass &reader, const FarEntryType entry_type,
                   const TokenType token_type, const std::string &begin_key,
@@ -171,7 +159,21 @@ void PrintStrings(FarReaderClass &reader, const FarEntryType entry_type,
                                         &args);
 }
 
+#ifndef _WIN32
+REGISTER_FST_OPERATION_4ARCS(CompileStrings, FarCompileStringsArgs);
+REGISTER_FST_OPERATION_4ARCS(Convert, FarConvertArgs);
+REGISTER_FST_OPERATION_4ARCS(Create, FarCreateArgs);
+REGISTER_FST_OPERATION_4ARCS(Decode, FarDecodeArgs);
+REGISTER_FST_OPERATION_4ARCS(Encode, FarEncodeArgs);
+REGISTER_FST_OPERATION_4ARCS(Equal, FarEqualArgs);
+REGISTER_FST_OPERATION_4ARCS(Extract, FarExtractArgs);
+
+REGISTER_FST_OPERATION_4ARCS(GetInfo, FarGetInfoArgs);
+REGISTER_FST_OPERATION_4ARCS(Info, FarInfoArgs);
+REGISTER_FST_OPERATION_4ARCS(Isomorphic, FarIsomorphicArgs);
 REGISTER_FST_OPERATION_4ARCS(PrintStrings, FarPrintStringsArgs);
+#endif
+
 
 }  // namespace script
 }  // namespace fst

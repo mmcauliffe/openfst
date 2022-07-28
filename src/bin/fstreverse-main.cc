@@ -25,7 +25,7 @@
 #include <fst/script/fst-class.h>
 #include <fst/script/reverse.h>
 
-DECLARE_EXE_bool(require_superinitial);
+DECLARE_bool(require_superinitial);
 
 int fstreverse_main(int argc, char **argv) {
   namespace s = fst::script;

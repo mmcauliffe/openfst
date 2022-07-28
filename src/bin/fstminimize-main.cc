@@ -25,8 +25,8 @@
 #include <fst/log.h>
 #include <fst/script/minimize.h>
 
-DECLARE_EXE_double(delta);
-DECLARE_EXE_bool(allow_nondet);
+DECLARE_double(delta);
+DECLARE_bool(allow_nondet);
 
 int fstminimize_main(int argc, char **argv) {
   namespace s = fst::script;

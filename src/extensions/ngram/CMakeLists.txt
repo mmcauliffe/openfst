@@ -10,6 +10,15 @@ add_library(fstngram
 target_link_libraries(fstngram
     fst
 )
+GENERATE_EXPORT_HEADER( fstngram
+             BASE_NAME fstngram
+             EXPORT_MACRO_NAME fstngram_EXPORT
+             EXPORT_FILE_NAME ${CMAKE_BINARY_DIR}/include/fst/export/fstngram_Export.h
+             STATIC_DEFINE fstngram_BUILT_AS_STATIC
+)
+target_compile_definitions(fstngram PUBLIC fstngram_EXPORTS)
+target_include_directories(fstngram PUBLIC $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/include>
+                           $<INSTALL_INTERFACE:include>)
 
 set_target_properties(fstngram PROPERTIES
   SOVERSION "${SOVERSION}"
@@ -31,8 +40,14 @@ target_link_libraries(ngram_fst
     fst
 )
 
-install(TARGETS ngram_fst
-LIBRARY DESTINATION bin
-ARCHIVE DESTINATION lib
-RUNTIME DESTINATION bin
-)
+if (MSVC)
+install(TARGETS ${_name} 
+        LIBRARY DESTINATION bin
+        ARCHIVE DESTINATION bin
+        RUNTIME DESTINATION bin)
+else()
+install(TARGETS ${_name} 
+        LIBRARY DESTINATION lib
+        ARCHIVE DESTINATION lib
+        RUNTIME DESTINATION bin)
+endif()

@@ -20,28 +20,54 @@
 #include <fst/arc.h>
 #include <fst/fst.h>
 #include <fst/register.h>
+#include <fst/exports/fstspecial_Export.h>
 
-DEFINE_int64(phi_fst_phi_label, 0,
-             "Label of transitions to be interpreted as phi ('failure') "
-             "transitions");
-DEFINE_bool(phi_fst_phi_loop, true,
-            "When true, a phi self loop consumes a symbol");
-DEFINE_string(phi_fst_rewrite_mode, "auto",
-              "Rewrite both sides when matching? One of:"
-              " \"auto\" (rewrite iff acceptor), \"always\", \"never\"");
+#ifdef fstspecial_EXPORTS
+
+int64_t FST_FLAGS_phi_fst_phi_label = 0;                                            
+static FlagRegisterer<int64_t>                                                 
+phi_fst_phi_label_flags_registerer("phi_fst_phi_label", FlagDescription<int64_t>(&FST_FLAGS_phi_fst_phi_label, 
+    "Label of transitions to be interpreted as phi ('failure') "
+    "transitions", 
+    "int64_t", 
+    __FILE__, 
+    0));
+
+bool FST_FLAGS_phi_fst_phi_loop = true;                                            
+static FlagRegisterer<bool>                                                
+phi_fst_phi_loop_flags_registerer("phi_fst_phi_loop", FlagDescription<bool>(&FST_FLAGS_phi_fst_phi_loop, 
+    "When true, a phi self loop consumes a symbol", 
+    "bool", 
+    __FILE__, 
+    true));
+
+std::string FST_FLAGS_phi_fst_rewrite_mode = "auto";                                           
+static FlagRegisterer<std::string>                                                 
+phi_fst_rewrite_mode_flags_registerer("phi_fst_rewrite_mode", FlagDescription<std::string>(&FST_FLAGS_phi_fst_rewrite_mode, 
+    "Rewrite both sides when matching? One of:"
+    " \"auto\" (rewrite iff acceptor), \"always\", \"never\"", 
+    "std::string", 
+    __FILE__, 
+    "auto"));
+
+#endif // fstspecial_EXPORTS
+
 
 namespace fst {
 
-REGISTER_FST(PhiFst, StdArc);
-REGISTER_FST(PhiFst, LogArc);
-REGISTER_FST(PhiFst, Log64Arc);
+#ifndef _WIN32
+    REGISTER_FST(PhiFst, StdArc);
+    REGISTER_FST(PhiFst, LogArc);
+    REGISTER_FST(PhiFst, Log64Arc);
 
-REGISTER_FST(InputPhiFst, StdArc);
-REGISTER_FST(InputPhiFst, LogArc);
-REGISTER_FST(InputPhiFst, Log64Arc);
+    REGISTER_FST(InputPhiFst, StdArc);
+    REGISTER_FST(InputPhiFst, LogArc);
+    REGISTER_FST(InputPhiFst, Log64Arc);
 
-REGISTER_FST(OutputPhiFst, StdArc);
-REGISTER_FST(OutputPhiFst, LogArc);
-REGISTER_FST(OutputPhiFst, Log64Arc);
+    REGISTER_FST(OutputPhiFst, StdArc);
+    REGISTER_FST(OutputPhiFst, LogArc);
+    REGISTER_FST(OutputPhiFst, Log64Arc);
+#endif
+
 
 }  // namespace fst

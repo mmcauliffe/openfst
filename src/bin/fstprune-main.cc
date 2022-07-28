@@ -24,9 +24,9 @@
 #include <fst/flags.h>
 #include <fst/script/prune.h>
 
-DECLARE_EXE_double(delta);
-DECLARE_EXE_int64(nstate);
-DECLARE_EXE_string(weight);
+DECLARE_double(delta);
+DECLARE_int64(nstate);
+DECLARE_string(weight);
 
 int fstprune_main(int argc, char **argv) {
   namespace s = fst::script;

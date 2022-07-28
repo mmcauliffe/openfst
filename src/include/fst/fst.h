@@ -47,7 +47,7 @@
 #include <string_view>
 
 
-DECLARE_bool(fst_align);
+DECLARE_export_bool(fst_align, fst_EXPORT);
 
 namespace fst {
 

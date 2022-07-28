@@ -24,7 +24,7 @@
 #include <fst/flags.h>
 #include <fst/script/convert.h>
 
-DECLARE_EXE_string(fst_type);
+DECLARE_string(fst_type);
 
 int fstconvert_main(int argc, char **argv) {
   namespace s = fst::script;

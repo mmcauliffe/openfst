@@ -26,9 +26,10 @@
 
 namespace fst {
 
-REGISTER_FST(VectorFst, StdArc);
-REGISTER_FST(VectorFst, LogArc);
-REGISTER_FST(VectorFst, Log64Arc);
+#ifndef _WIN32
+	REGISTER_FST(VectorFst, StdArc);
+	REGISTER_FST(VectorFst, LogArc);
+	REGISTER_FST(VectorFst, Log64Arc);
 
 REGISTER_FST(ConstFst, StdArc);
 REGISTER_FST(ConstFst, LogArc);
@@ -57,5 +58,5 @@ REGISTER_FST(CompactUnweightedFst, Log64Arc);
 REGISTER_FST(CompactUnweightedAcceptorFst, StdArc);
 REGISTER_FST(CompactUnweightedAcceptorFst, LogArc);
 REGISTER_FST(CompactUnweightedAcceptorFst, Log64Arc);
-
+#endif
 }  // namespace fst

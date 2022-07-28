@@ -27,7 +27,7 @@
 #include <fst/script/reweight.h>
 #include <fst/script/text-io.h>
 
-DECLARE_EXE_string(reweight_type);
+DECLARE_string(reweight_type);
 
 int fstreweight_main(int argc, char **argv) {
   namespace s = fst::script;

@@ -14,12 +14,14 @@ add_library(fst
   util.cc
   weight.cc
 )
+if (MSVC)
 GENERATE_EXPORT_HEADER( fst
              BASE_NAME fst
              EXPORT_MACRO_NAME fst_EXPORT
-             EXPORT_FILE_NAME ${CMAKE_BINARY_DIR}/include/fst/fst_Export.h
+             EXPORT_FILE_NAME ${CMAKE_BINARY_DIR}/include/fst/export/fst_Export.h
              STATIC_DEFINE fst_BUILT_AS_STATIC
 )
+endif()
 set_target_properties(fst PROPERTIES
   SOVERSION "${SOVERSION}"
 )
@@ -28,6 +30,7 @@ target_include_directories(fst PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_D
 target_include_directories(fst PUBLIC $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/include>
                            $<INSTALL_INTERFACE:include>)
 target_link_libraries(fst ${CMAKE_DL_LIBS})
+target_compile_definitions(fst PRIVATE fst_EXPORTS)
 
 
 
@@ -36,6 +39,8 @@ LIBRARY DESTINATION lib
 ARCHIVE DESTINATION lib
 RUNTIME DESTINATION bin
   )
+if (MSVC)
 install(FILES
-${CMAKE_BINARY_DIR}/include/fst/fst_Export.h DESTINATION include/fst
+${CMAKE_BINARY_DIR}/include/fst/export/fst_Export.h DESTINATION include/fst/export
 )
+endif()

@@ -26,10 +26,10 @@
 #include <fst/script/getters.h>
 #include <fst/script/map.h>
 
-DECLARE_EXE_double(delta);
-DECLARE_EXE_string(map_type);
-DECLARE_EXE_double(power);
-DECLARE_EXE_string(weight);
+DECLARE_double(delta);
+DECLARE_string(map_type);
+DECLARE_double(power);
+DECLARE_string(weight);
 
 int fstmap_main(int argc, char **argv) {
   namespace s = fst::script;

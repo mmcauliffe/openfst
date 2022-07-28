@@ -74,7 +74,16 @@ class FstRegister : public GenericRegister<std::string, FstRegisterEntry<Arc>,
   std::string ConvertKeyToSoFilename(std::string_view key) const override {
     std::string legal_type(key);
     ConvertToLegalCSymbol(&legal_type);
-    legal_type.append("-fst.so");
+    legal_type.append("-fst");
+    #ifdef _WIN32
+        legal_type.append(".dll");
+    #elif defined __APPLE__
+        legal_type.append(".dylib");
+    #else
+        legal_type.append(".so");
+
+    #endif // _WIN32
+
     return legal_type;
   }
 };
@@ -116,7 +125,7 @@ class  FstRegisterer : public GenericRegisterer<FstRegister<typename FST::Arc>> 
 // REGISTER_FST(MyFst, StdArc);
 // }  // namespace example
 #define REGISTER_FST(FST, Arc) \
-  static fst::FstRegisterer<FST<Arc>> FST##_##Arc##_registerer
+  inline fst::FstRegisterer<FST<Arc>> FST##_##Arc##_registerer
 
 // Converts an FST to the specified type.
 template <class Arc>

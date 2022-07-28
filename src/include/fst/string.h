@@ -36,11 +36,12 @@
 #include <fst/properties.h>
 #include <fst/symbol-table.h>
 #include <fst/util.h>
+#include <fst/exports/exports.h>
 
 #include <fst/compat.h>
 #include <string_view>
 
-DECLARE_string(fst_field_separator);
+DECLARE_export_string(fst_field_separator, fst_EXPORT);
 
 namespace fst {
 

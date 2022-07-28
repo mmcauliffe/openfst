@@ -30,7 +30,7 @@
 #include <fst/weight.h>
 #include <fst/test/rand-fst.h>
 
-DECLARE_EXE_int32(repeat);  // defined in ./algo_test.cc
+DECLARE_int32(repeat);  // defined in ./algo_test.cc
 
 namespace fst {
 

@@ -817,6 +817,11 @@ inline void VectorFst<Arc, State>::InitMutableArcIterator(
 // A useful alias when using StdArc.
 using StdVectorFst = VectorFst<StdArc>;
 
+inline static FstRegisterer<VectorFst<StdArc>> VectorFst_StdArc_registerer;
+inline static FstRegisterer<VectorFst<LogArc>> VectorFst_LogArc_registerer;
+inline static FstRegisterer<VectorFst<Log64Arc>> VectorFst_Log64Arc_registerer;
+
+
 }  // namespace fst
 
 #endif  // FST_VECTOR_FST_H_

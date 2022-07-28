@@ -708,6 +708,11 @@ class EditFst : public ImplToMutableFst<
   using ImplToFst<Impl, MutableFst<Arc>>::SetImpl;
 };
 
+inline static FstRegisterer<EditFst<StdArc>> EditFst_StdArc_registerer;
+inline static FstRegisterer<EditFst<LogArc>> EditFst_LogArc_registerer;
+inline static FstRegisterer<EditFst<Log64Arc>> EditFst_Log64Arc_registerer;
+
+
 }  // namespace fst
 
 #endif  // FST_EDIT_FST_H_

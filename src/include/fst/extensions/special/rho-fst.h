@@ -27,9 +27,10 @@
 #include <fst/const-fst.h>
 #include <fst/matcher-fst.h>
 #include <fst/matcher.h>
+#include <fst/register.h>
 
-DECLARE_int64(rho_fst_rho_label);
-DECLARE_string(rho_fst_rewrite_mode);
+DECLARE_export_int64(rho_fst_rho_label, fstspecial_EXPORT);
+DECLARE_export_string(rho_fst_rewrite_mode, fstspecial_EXPORT);
 
 namespace fst {
 namespace internal {
@@ -167,6 +168,21 @@ using OutputRhoFst =
                output_rho_fst_type>;
 
 using StdOutputRhoFst = OutputRhoFst<StdArc>;
+
+#ifdef _WIN32
+
+inline static FstRegisterer<RhoFst<StdArc>> RhoFst_StdArc_registerer;
+inline static FstRegisterer<RhoFst<LogArc>> RhoFst_LogArc_registerer;
+inline static FstRegisterer<RhoFst<Log64Arc>> RhoFst_Log64Arc_registerer;
+
+inline static FstRegisterer<InputRhoFst<StdArc>> InputRhoFst_StdArc_registerer;
+inline static FstRegisterer<InputRhoFst<LogArc>> InputRhoFst_LogArc_registerer;
+inline static FstRegisterer<InputRhoFst<Log64Arc>> InputRhoFst_Log64Arc_registerer;
+
+inline static FstRegisterer<OutputRhoFst<StdArc>> OutputRhoFst_StdArc_registerer;
+inline static FstRegisterer<OutputRhoFst<LogArc>> OutputRhoFst_LogArc_registerer;
+inline static FstRegisterer<OutputRhoFst<Log64Arc>> OutputRhoFst_Log64Arc_registerer;
+#endif
 
 }  // namespace fst
 

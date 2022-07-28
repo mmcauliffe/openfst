@@ -1,26 +1,5 @@
 file(GLOB HEADER_FILES ../../include/fst/extensions/special/*.h)
 
-if(HAVE_BIN)
-  add_executable(fstspecial-bin
-    ../../bin/fstconvert.cc 
-    ../../bin/fstconvert-main.cc
-    phi-fst.cc
-    rho-fst.cc
-    sigma-fst.cc
-  )
-
-  set_target_properties(fstspecial-bin PROPERTIES 
-    OUTPUT_NAME fstspecial
-  )
-
-  target_link_libraries(fstspecial-bin
-    fstscript
-    fstscriptutils
-    fst
-    ${CMAKE_DL_LIBS}
- )
-endif(HAVE_BIN)
-
 
 add_library(fstspecial
   phi-fst.cc
@@ -28,6 +7,15 @@ add_library(fstspecial
   sigma-fst.cc
   ${HEADER_FILES}
 )
+GENERATE_EXPORT_HEADER( fstspecial
+             BASE_NAME fstspecial
+             EXPORT_MACRO_NAME fstspecial_EXPORT
+             EXPORT_FILE_NAME ${CMAKE_BINARY_DIR}/include/fst/export/fstspecial_Export.h
+             STATIC_DEFINE fstspecial_BUILT_AS_STATIC
+)
+target_compile_definitions(fstspecial PRIVATE fstspecial_EXPORTS)
+target_include_directories(fstspecial PUBLIC $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/include>
+                           $<INSTALL_INTERFACE:include>)
 
 set_target_properties(fstspecial PROPERTIES
   SOVERSION "${SOVERSION}"
@@ -36,24 +24,35 @@ target_link_libraries(fstspecial
   fst
 )
 
+if(HAVE_BIN)
+  add_executable(fstspecial-bin
+    ../../bin/fstconvert.cc 
+    ../../bin/fstconvert-main.cc
+  )
+
+  set_target_properties(fstspecial-bin PROPERTIES 
+    OUTPUT_NAME fstspecial
+  )
+  if (MSVC)
+    target_link_libraries(fstspecial-bin
+    fstspecial
+      fstscript
+      fstscriptutils
+      fst
+  )
+ else()
+  target_link_libraries(fstspecial-bin
+  fstspecial
+    fstscript
+    fst
+    ${CMAKE_DL_LIBS}
+  )
+ endif()
+endif(HAVE_BIN)
+
+
 install(TARGETS fstspecial fstspecial-bin
 LIBRARY DESTINATION lib
 ARCHIVE DESTINATION lib
 RUNTIME DESTINATION bin
 )
-
-function (add_module _name)
-    add_library(${ARGV})
-    if (TARGET ${_name})
-        target_link_libraries(${_name} fst)
-    endif()
-
-    install(TARGETS ${_name}
-    LIBRARY DESTINATION bin
-    ARCHIVE DESTINATION bin
-    RUNTIME DESTINATION bin)
-endfunction()
-
-add_module(phi-fst MODULE phi-fst.cc)
-add_module(rho-fst MODULE rho-fst.cc)
-add_module(sigma-fst MODULE sigma-fst.cc)

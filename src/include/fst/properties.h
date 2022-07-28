@@ -28,7 +28,7 @@
 #include <fst/compat.h>
 #include <fst/log.h>
 #include <string_view>
-#include <fst/fst_Export.h>
+#include <fst/exports/exports.h>
 
 namespace fst {
 

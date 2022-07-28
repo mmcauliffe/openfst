@@ -20,6 +20,15 @@ target_link_libraries(fstcompact fst)
 set_target_properties(fstcompact PROPERTIES 
   SOVERSION "${SOVERSION}"
 )
+GENERATE_EXPORT_HEADER( fstcompact
+             BASE_NAME fstcompact
+             EXPORT_MACRO_NAME fstcompact_EXPORT
+             EXPORT_FILE_NAME ${CMAKE_BINARY_DIR}/include/fst/export/fstcompact_Export.h
+             STATIC_DEFINE fstcompact_BUILT_AS_STATIC
+)
+target_compile_definitions(fstcompact PRIVATE fstcompact_EXPORTS)
+target_include_directories(fstcompact PUBLIC $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/include>
+                           $<INSTALL_INTERFACE:include>)
 
 install(TARGETS fstcompact 
 	        LIBRARY DESTINATION lib
@@ -34,10 +43,17 @@ function (add_module _name)
     endif()
 
     #set_target_properties(${_name} PROPERTIES SOVERSION "1")
+    if (MSVC)
     install(TARGETS ${_name} 
 	        LIBRARY DESTINATION bin
 			ARCHIVE DESTINATION bin
             RUNTIME DESTINATION bin)
+    else()
+    install(TARGETS ${_name} 
+	        LIBRARY DESTINATION lib
+			ARCHIVE DESTINATION lib
+            RUNTIME DESTINATION bin)
+    endif()
 endfunction()
 
 add_module(compact8_acceptor-fst MODULE

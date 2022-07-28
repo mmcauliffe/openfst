@@ -20,26 +20,47 @@
 #include <fst/arc.h>
 #include <fst/fst.h>
 #include <fst/register.h>
+#include <fst/exports/fstspecial_Export.h>
 
-DEFINE_int64(sigma_fst_sigma_label, 0,
-             "Label of transitions to be interpreted as sigma ('any') "
-             "transitions");
-DEFINE_string(sigma_fst_rewrite_mode, "auto",
-              "Rewrite both sides when matching? One of:"
-              " \"auto\" (rewrite iff acceptor), \"always\", \"never\"");
+#ifdef fstspecial_EXPORTS
+
+int64_t FST_FLAGS_sigma_fst_sigma_label = 0;
+static FlagRegisterer<int64_t>
+sigma_fst_sigma_label_flags_registerer("sigma_fst_sigma_label", FlagDescription<int64_t>(&FST_FLAGS_sigma_fst_sigma_label,
+    "Label of transitions to be interpreted as sigma ('any') "
+    "transitions",
+    "int64_t",
+    __FILE__,
+    0));
+
+std::string FST_FLAGS_sigma_fst_rewrite_mode = "auto";
+static FlagRegisterer<std::string>
+sigma_fst_rewrite_mode_flags_registerer("sigma_fst_rewrite_mode", FlagDescription<std::string>(&FST_FLAGS_sigma_fst_rewrite_mode,
+    "Rewrite both sides when matching? One of:"
+    " \"auto\" (rewrite iff acceptor), \"always\", \"never\"",
+    "std::string",
+    __FILE__,
+    "auto"));
+
+#endif // fstspecial_EXPORTS
+
+
 
 namespace fst {
 
-REGISTER_FST(SigmaFst, StdArc);
-REGISTER_FST(SigmaFst, LogArc);
-REGISTER_FST(SigmaFst, Log64Arc);
+#ifndef _WIN32
 
-REGISTER_FST(InputSigmaFst, StdArc);
-REGISTER_FST(InputSigmaFst, LogArc);
-REGISTER_FST(InputSigmaFst, Log64Arc);
+    REGISTER_FST(SigmaFst, StdArc);
+    REGISTER_FST(SigmaFst, LogArc);
+    REGISTER_FST(SigmaFst, Log64Arc);
 
-REGISTER_FST(OutputSigmaFst, StdArc);
-REGISTER_FST(OutputSigmaFst, LogArc);
-REGISTER_FST(OutputSigmaFst, Log64Arc);
+    REGISTER_FST(InputSigmaFst, StdArc);
+    REGISTER_FST(InputSigmaFst, LogArc);
+    REGISTER_FST(InputSigmaFst, Log64Arc);
+
+    REGISTER_FST(OutputSigmaFst, StdArc);
+    REGISTER_FST(OutputSigmaFst, LogArc);
+    REGISTER_FST(OutputSigmaFst, Log64Arc);
+#endif
 
 }  // namespace fst

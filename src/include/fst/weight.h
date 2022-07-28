@@ -34,8 +34,8 @@
 #include <fst/util.h>
 
 
-DECLARE_string(fst_weight_parentheses);
-DECLARE_string(fst_weight_separator);
+DECLARE_export_string(fst_weight_parentheses, fst_EXPORT);
+DECLARE_export_string(fst_weight_separator, fst_EXPORT);
 
 namespace fst {
 

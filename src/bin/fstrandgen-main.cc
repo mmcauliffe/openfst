@@ -26,12 +26,12 @@
 #include <fst/script/getters.h>
 #include <fst/script/randgen.h>
 
-DECLARE_EXE_int32(max_length);
-DECLARE_EXE_int32(npath);
-DECLARE_EXE_uint64(seed);
-DECLARE_EXE_string(select);
-DECLARE_EXE_bool(weighted);
-DECLARE_EXE_bool(remove_total_weight);
+DECLARE_int32(max_length);
+DECLARE_int32(npath);
+DECLARE_uint64(seed);
+DECLARE_string(select);
+DECLARE_bool(weighted);
+DECLARE_bool(remove_total_weight);
 
 int fstrandgen_main(int argc, char **argv) {
   namespace s = fst::script;

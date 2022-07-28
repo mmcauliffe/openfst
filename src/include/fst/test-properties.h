@@ -29,7 +29,7 @@
 
 #include <unordered_set>
 
-DECLARE_bool(fst_verify_properties);
+DECLARE_export_bool(fst_verify_properties, fst_EXPORT);
 
 namespace fst {
 namespace internal {

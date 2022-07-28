@@ -22,5 +22,8 @@ using fst::LinearTaggerFst;
 using fst::LogArc;
 using fst::StdArc;
 
+
+#ifndef _WIN32
 REGISTER_FST(LinearTaggerFst, StdArc);
-REGISTER_FST(LinearTaggerFst, LogArc);
+REGISTER_FST(LinearTaggerFst, LogArc);;
+#endif

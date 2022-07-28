@@ -20,10 +20,17 @@ function (add_module _name)
         target_link_libraries(${_name} fst)
     endif()
 
-    install(TARGETS ${_name}
-    LIBRARY DESTINATION bin
-    ARCHIVE DESTINATION bin
-    RUNTIME DESTINATION bin)
+    if (MSVC)
+    install(TARGETS ${_name} 
+	        LIBRARY DESTINATION bin
+			ARCHIVE DESTINATION bin
+            RUNTIME DESTINATION bin)
+    else()
+    install(TARGETS ${_name} 
+	        LIBRARY DESTINATION lib
+			ARCHIVE DESTINATION lib
+            RUNTIME DESTINATION bin)
+    endif()
 endfunction()
   
 add_module(arc_lookahead-fst MODULE

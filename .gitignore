@@ -1,2 +1,8 @@
 .vscode/
 
+
+out/
+
+.vs/
+
+CMakeSettings.json

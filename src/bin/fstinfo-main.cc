@@ -29,10 +29,10 @@
 #include <fst/script/getters.h>
 #include <fst/script/info.h>
 
-DECLARE_EXE_string(arc_filter);
-DECLARE_EXE_string(info_type);
-DECLARE_EXE_bool(test_properties);
-DECLARE_EXE_bool(fst_verify);
+DECLARE_string(arc_filter);
+DECLARE_string(info_type);
+DECLARE_bool(test_properties);
+DECLARE_bool(fst_verify);
 
 namespace {
 // Prints info using only the header of the FST with path `in_name`.

@@ -42,13 +42,6 @@
 #include <string_view>
 #include <fst/lock.h>
 
-template class std::allocator<int>;
-template class std::vector<int>;
-template class std::string;
-template class std::vector<std::string>;
-template class std::basic_string<char>;
-template class std::vector<int64_t>;
-template class std::map<int64_t, int64_t>;
 
 DECLARE_bool(fst_compat_symbols);
 

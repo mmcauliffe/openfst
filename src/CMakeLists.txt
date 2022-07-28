@@ -3,6 +3,8 @@
 include_directories(./include/)
 install(DIRECTORY include/ DESTINATION include/
         FILES_MATCHING PATTERN "*.h")
+install(DIRECTORY include/ DESTINATION include/
+        FILES_MATCHING PATTERN "*.inc")
 
 add_subdirectory(lib)
 add_subdirectory(script)
@@ -13,5 +15,6 @@ endif(HAVE_BIN)
 
 add_subdirectory(extensions)
 
-enable_testing()
+if (${OPENFST_BUILD_TEST})
 add_subdirectory(test)
+endif()

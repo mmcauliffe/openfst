@@ -27,9 +27,10 @@
 #include <fst/const-fst.h>
 #include <fst/matcher-fst.h>
 #include <fst/matcher.h>
+#include <fst/register.h>
 
-DECLARE_int64(sigma_fst_sigma_label);
-DECLARE_string(sigma_fst_rewrite_mode);
+DECLARE_export_int64(sigma_fst_sigma_label, fstspecial_EXPORT);
+DECLARE_export_string(sigma_fst_rewrite_mode, fstspecial_EXPORT);
 
 namespace fst {
 namespace internal {
@@ -170,6 +171,21 @@ using OutputSigmaFst = MatcherFst<
     output_sigma_fst_type>;
 
 using StdOutputSigmaFst = OutputSigmaFst<StdArc>;
+
+#ifdef _WIN32
+
+inline static FstRegisterer<SigmaFst<StdArc>> SigmaFst_StdArc_registerer;
+inline static FstRegisterer<SigmaFst<LogArc>> SigmaFst_LogArc_registerer;
+inline static FstRegisterer<SigmaFst<Log64Arc>> SigmaFst_Log64Arc_registerer;
+
+inline static FstRegisterer<InputSigmaFst<StdArc>> InputSigmaFst_StdArc_registerer;
+inline static FstRegisterer<InputSigmaFst<LogArc>> InputSigmaFst_LogArc_registerer;
+inline static FstRegisterer<InputSigmaFst<Log64Arc>> InputSigmaFst_Log64Arc_registerer;
+
+inline static FstRegisterer<OutputSigmaFst<StdArc>> OutputSigmaFst_StdArc_registerer;
+inline static FstRegisterer<OutputSigmaFst<LogArc>> OutputSigmaFst_LogArc_registerer;
+inline static FstRegisterer<OutputSigmaFst<Log64Arc>> OutputSigmaFst_Log64Arc_registerer;
+#endif
 
 }  // namespace fst
 

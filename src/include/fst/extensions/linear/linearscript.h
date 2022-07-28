@@ -24,6 +24,7 @@
 #include <vector>
 
 #include <fst/compat.h>
+#include <fst/flags.h>
 #include <fst/extensions/linear/linear-fst-data-builder.h>
 #include <fst/extensions/linear/linear-fst.h>
 #include <fstream>
@@ -31,11 +32,11 @@
 #include <fst/script/arg-packs.h>
 #include <fst/script/script-impl.h>
 
-DECLARE_string(delimiter);
-DECLARE_string(empty_symbol);
-DECLARE_string(start_symbol);
-DECLARE_string(end_symbol);
-DECLARE_bool(classifier);
+DECLARE_export_string(delimiter, fstlinearscript_EXPORT);
+DECLARE_export_string(empty_symbol, fstlinearscript_EXPORT);
+DECLARE_export_string(start_symbol, fstlinearscript_EXPORT);
+DECLARE_export_string(end_symbol, fstlinearscript_EXPORT);
+DECLARE_export_bool(classifier, fstlinearscript_EXPORT);
 
 namespace fst {
 namespace script {

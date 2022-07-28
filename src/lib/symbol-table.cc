@@ -29,10 +29,24 @@
 #include <string_view>
 #include <fst/lock.h>
 
-DEFINE_bool(fst_compat_symbols, true,
-            "Require symbol tables to match when appropriate");
-DEFINE_string(fst_field_separator, "\t ",
-              "Set of characters used as a separator between printed fields");
+#ifdef fst_EXPORT
+
+bool FST_FLAGS_fst_compat_symbols = true;                                            
+static FlagRegisterer<bool>                                                 
+fst_compat_symbols_flags_registerer("fst_compat_symbols", FlagDescription<bool>(&FST_FLAGS_fst_compat_symbols,
+    "Set of characters used as a separator between printed fields",
+    "bool",
+    __FILE__,
+    true));
+
+std::string FST_FLAGS_fst_field_separator = "\t ";                                            
+static FlagRegisterer<std::string>                                                 
+fst_field_separator_flags_registerer("fst_field_separator", FlagDescription<std::string>(&FST_FLAGS_fst_field_separator,
+    "Set of characters used as a separator between printed fields", 
+    "std::string",
+    __FILE__,
+    "\t "));
+#endif
 
 namespace fst {
 

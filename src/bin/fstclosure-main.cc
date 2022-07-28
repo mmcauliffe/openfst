@@ -25,7 +25,7 @@
 #include <fst/script/closure.h>
 #include <fst/script/getters.h>
 
-DECLARE_EXE_string(closure_type);
+DECLARE_string(closure_type);
 
 int fstclosure_main(int argc, char **argv) {
   namespace s = fst::script;

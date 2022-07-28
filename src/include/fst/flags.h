@@ -31,7 +31,22 @@
 #include <utility>
 
 #include <fst/lock.h>
-#include <fst/fst_Export.h>
+
+#include <fst/exports/exports.h>
+
+#define DECLARE_bool(name) extern bool FST_FLAGS_##name
+#define DECLARE_string(name) extern std::string FST_FLAGS_##name
+#define DECLARE_int32(name) extern int32_t FST_FLAGS_##name
+#define DECLARE_int64(name) extern int64_t FST_FLAGS_##name
+#define DECLARE_uint64(name) extern uint64_t FST_FLAGS_##name
+#define DECLARE_double(name) extern double FST_FLAGS_##name
+
+#define DECLARE_export_bool(name, export_macro) extern bool export_macro FST_FLAGS_##name
+#define DECLARE_export_string(name, export_macro) extern std::string export_macro FST_FLAGS_##name
+#define DECLARE_export_int32(name, export_macro) extern int32_t export_macro FST_FLAGS_##name
+#define DECLARE_export_int64(name, export_macro) extern int64_t export_macro FST_FLAGS_##name
+#define DECLARE_export_uint64(name, export_macro) extern uint64_t export_macro FST_FLAGS_##name
+#define DECLARE_export_double(name, export_macro) extern double export_macro FST_FLAGS_##name
 
 // FLAGS USAGE:
 //
@@ -50,19 +65,6 @@
 //
 // ShowUsage() can be used to print out command and flag usage.
 
-#define DECLARE_bool(name) extern bool fst_EXPORT FST_FLAGS_ ## name
-#define DECLARE_string(name) extern std::string fst_EXPORT FST_FLAGS_##name
-#define DECLARE_int32(name) extern int32_t fst_EXPORT FST_FLAGS_##name
-#define DECLARE_int64(name) extern int64_t fst_EXPORT FST_FLAGS_##name
-#define DECLARE_uint64(name) extern uint64_t fst_EXPORT FST_FLAGS_##name
-#define DECLARE_double(name) extern double fst_EXPORT FST_FLAGS_ ## name
-
-#define DECLARE_EXE_bool(name) extern bool FST_FLAGS_ ## name
-#define DECLARE_EXE_string(name) extern std::string FST_FLAGS_##name
-#define DECLARE_EXE_int32(name) extern int32_t FST_FLAGS_##name
-#define DECLARE_EXE_int64(name) extern int64_t FST_FLAGS_##name
-#define DECLARE_EXE_uint64(name) extern uint64_t FST_FLAGS_##name
-#define DECLARE_EXE_double(name) extern double FST_FLAGS_ ## name
 
 template <typename T>
 struct FlagDescription {
@@ -200,9 +202,9 @@ class FlagRegisterer {
 
 
 #define DEFINE_VAR(type, name, value, doc)                                    \
-  type FST_FLAGS_ ## name = value;                                            \
+  type FST_FLAGS_##name = value;                                            \
   static FlagRegisterer<type>                                                 \
-  name ## _flags_registerer(#name, FlagDescription<type>(&FST_FLAGS_ ## name, \
+  name ##_flags_registerer(#name, FlagDescription<type>(&FST_FLAGS_##name, \
                                                          doc,                 \
                                                          #type,               \
                                                          __FILE__,            \
@@ -218,7 +220,7 @@ class FlagRegisterer {
 
 
 // Temporary directory.
-DECLARE_string(tmpdir);
+DECLARE_export_string(tmpdir, fst_EXPORT);
 
 void SetFlags(const char *usage, int *argc, char ***argv, bool remove_flags,
               const char *src = "");

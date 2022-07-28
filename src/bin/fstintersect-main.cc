@@ -26,8 +26,8 @@
 #include <fst/script/getters.h>
 #include <fst/script/intersect.h>
 
-DECLARE_EXE_string(compose_filter);
-DECLARE_EXE_bool(connect);
+DECLARE_string(compose_filter);
+DECLARE_bool(connect);
 
 int fstintersect_main(int argc, char **argv) {
   namespace s = fst::script;
