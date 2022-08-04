@@ -21,6 +21,11 @@
 #include <memory>
 #include <string>
 #include <vector>
+#ifdef _WIN32
+#include <io.h>
+#include <fcntl.h>
+#include <iostream>
+#endif
 
 #include <fst/flags.h>
 #include <fst/extensions/far/farscript.h>
@@ -58,7 +63,7 @@ int farcompilestrings_main(int argc, char **argv) {
   std::vector<std::string> sources;
   if (FST_FLAGS_file_list_input) {
     for (int i = 1; i < argc - 1; ++i) {
-      std::ifstream istrm(argv[i]);
+      std::ifstream istrm(argv[i], std::ios_base::in | std::ios_base::binary);
       std::string str;
       while (std::getline(istrm, str)) sources.push_back(str);
     }
@@ -75,7 +80,6 @@ int farcompilestrings_main(int argc, char **argv) {
   // argc <= 2 means the file (if any) is an input file, so write to stdout.
   const std::string out_far =
       argc > 2 && strcmp(argv[argc - 1], "-") != 0 ? argv[argc - 1] : "";
-
   fst::FarEntryType entry_type;
   if (!s::GetFarEntryType(FST_FLAGS_entry_type, &entry_type)) {
     LOG(ERROR) << "Unknown or unsupported FAR entry type: "

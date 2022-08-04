@@ -26,8 +26,5 @@ using fst::LogArc;
 using fst::NGramFst;
 using fst::StdArc;
 
-#ifndef _WIN32
 REGISTER_FST(NGramFst, StdArc);
 REGISTER_FST(NGramFst, LogArc);
-#endif
-

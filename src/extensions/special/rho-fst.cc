@@ -21,44 +21,25 @@
 #include <fst/fst.h>
 #include <fst/register.h>
 
-#ifdef fstspecial_EXPORTS
-
-int64_t FST_FLAGS_rho_fst_rho_label = 0;
-static FlagRegisterer<int64_t>
-rho_fst_rho_label_flags_registerer("rho_fst_rho_label", FlagDescription<int64_t>(&FST_FLAGS_rho_fst_rho_label, 
-    "Label of transitions to be interpreted as rho ('rest') "
-    "transitions",
-    "int64_t",
-    __FILE__,
-    0));
-
-std::string FST_FLAGS_rho_fst_rewrite_mode = "auto";                                            \
-static FlagRegisterer<std::string>                                                 \
-rho_fst_rewrite_mode_flags_registerer("rho_fst_rewrite_mode", FlagDescription<std::string>(&FST_FLAGS_rho_fst_rewrite_mode, \
-    "Rewrite both sides when matching? One of:"
-    " \"auto\" (rewrite iff acceptor), \"always\", \"never\"", \
-    "std::string", \
-    __FILE__, \
-    "auto"));
-
-#endif // fstspecial_EXPORTS
-
+DEFINE_int64(rho_fst_rho_label, 0,
+             "Label of transitions to be interpreted as rho ('rest') "
+             "transitions");
+DEFINE_string(rho_fst_rewrite_mode, "auto",
+              "Rewrite both sides when matching? One of:"
+              " \"auto\" (rewrite iff acceptor), \"always\", \"never\"");
 
 namespace fst {
 
-#ifndef _WIN32
-    REGISTER_FST(RhoFst, StdArc);
-    REGISTER_FST(RhoFst, LogArc);
-    REGISTER_FST(RhoFst, Log64Arc);
+REGISTER_FST(RhoFst, StdArc);
+REGISTER_FST(RhoFst, LogArc);
+REGISTER_FST(RhoFst, Log64Arc);
 
-    REGISTER_FST(InputRhoFst, StdArc);
-    REGISTER_FST(InputRhoFst, LogArc);
-    REGISTER_FST(InputRhoFst, Log64Arc);
+REGISTER_FST(InputRhoFst, StdArc);
+REGISTER_FST(InputRhoFst, LogArc);
+REGISTER_FST(InputRhoFst, Log64Arc);
 
-    REGISTER_FST(OutputRhoFst, StdArc);
-    REGISTER_FST(OutputRhoFst, LogArc);
-    REGISTER_FST(OutputRhoFst, Log64Arc);
-#endif
-
+REGISTER_FST(OutputRhoFst, StdArc);
+REGISTER_FST(OutputRhoFst, LogArc);
+REGISTER_FST(OutputRhoFst, Log64Arc);
 
 }  // namespace fst

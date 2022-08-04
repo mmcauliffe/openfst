@@ -159,7 +159,6 @@ void PrintStrings(FarReaderClass &reader, const FarEntryType entry_type,
                                         &args);
 }
 
-#ifndef _WIN32
 REGISTER_FST_OPERATION_4ARCS(CompileStrings, FarCompileStringsArgs);
 REGISTER_FST_OPERATION_4ARCS(Convert, FarConvertArgs);
 REGISTER_FST_OPERATION_4ARCS(Create, FarCreateArgs);
@@ -172,7 +171,6 @@ REGISTER_FST_OPERATION_4ARCS(GetInfo, FarGetInfoArgs);
 REGISTER_FST_OPERATION_4ARCS(Info, FarInfoArgs);
 REGISTER_FST_OPERATION_4ARCS(Isomorphic, FarIsomorphicArgs);
 REGISTER_FST_OPERATION_4ARCS(PrintStrings, FarPrintStringsArgs);
-#endif
 
 
 }  // namespace script

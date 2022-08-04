@@ -26,10 +26,13 @@
 #include <fst/replace.h>
 #include <fst/script/fst-class.h>
 
+#include <fst/script/script-impl.h>
+#include <fst/exports/exports.h>
+
 namespace fst {
 namespace script {
 
-struct ReplaceOptions {
+struct fstscript_EXPORT ReplaceOptions {
   const int64_t root;                        // Root rule for expansion.
   const ReplaceLabelType call_label_type;    // How to label call arc.
   const ReplaceLabelType return_label_type;  // How to label return arc.
@@ -76,7 +79,7 @@ void Replace(FstReplaceArgs *args) {
   *ofst = rfst;
 }
 
-void Replace(const std::vector<std::pair<int64_t, const FstClass *>> &pairs,
+void fstscript_EXPORT Replace(const std::vector<std::pair<int64_t, const FstClass *>> &pairs,
              MutableFstClass *ofst, const ReplaceOptions &opts);
 
 }  // namespace script

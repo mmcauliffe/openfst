@@ -35,7 +35,7 @@ set_target_properties(fstconst PROPERTIES
 GENERATE_EXPORT_HEADER( fstconst
              BASE_NAME fstconst
              EXPORT_MACRO_NAME fstconst_EXPORT
-             EXPORT_FILE_NAME ${CMAKE_BINARY_DIR}/include/fst/export/fstconst_Export.h
+             EXPORT_FILE_NAME ${CMAKE_BINARY_DIR}/include/fst/exports/fstconst_Export.h
              STATIC_DEFINE fstconst_BUILT_AS_STATIC
 )
 target_compile_definitions(fstconst PRIVATE fstconst_EXPORTS)

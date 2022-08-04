@@ -22,6 +22,10 @@
 
 #include <algorithm>
 #include <cstdint>
+#ifdef _WIN32
+#include <io.h>
+#endif
+#include <fcntl.h>
 #include <iostream>
 #include <sstream>
 #include <string>
@@ -35,10 +39,11 @@
 #include <fst/fst.h>
 #include <fst/vector-fst.h>
 #include <string_view>
+#include <fst/exports/exports.h>
 
 #ifdef _WIN32
 
-inline std::string basename(std::string const & path)
+inline std::string fstfarscript_EXPORT basename(std::string const & path)
 {
   return path.substr(path.find_last_of("/\\") + 1);
 }
@@ -48,9 +53,9 @@ inline std::string basename(std::string const & path)
 
 namespace fst {
 
-enum class FarEntryType { LINE, FILE };
+enum class fstfarscript_EXPORT FarEntryType { LINE, FILE };
 
-enum class FarType {
+enum class fstfarscript_EXPORT FarType {
   DEFAULT = 0,
   STTABLE = 1,
   STLIST = 2,
@@ -60,7 +65,7 @@ enum class FarType {
 // Checks for FST magic number in an input stream (to be opened given the source
 // name), to indicate to the caller function that the stream content is an FST
 // header.
-inline bool IsFst(const std::string &source) {
+inline bool fstfarscript_EXPORT IsFst(const std::string &source) {
   std::ifstream strm(source, std::ios_base::in | std::ios_base::binary);
   if (!strm) return false;
   int32_t magic_number = 0;
@@ -70,6 +75,7 @@ inline bool IsFst(const std::string &source) {
 }
 
 // FST archive header class
+class fstfarscript_EXPORT FarHeader;
 class FarHeader {
  public:
   const std::string &ArcType() const { return arctype_; }
@@ -273,6 +279,11 @@ class FstFarWriter final : public FarWriter<A> {
 template <class Arc>
 FarWriter<Arc> *FarWriter<Arc>::Create(const std::string &source,
                                        FarType type) {
+  #ifdef _WIN32
+  if(source.empty()){
+      _setmode(_fileno(stdout), _O_BINARY);
+  }
+  #endif
   switch (type) {
     case FarType::DEFAULT:
       if (source.empty()) return STListFarWriter<Arc>::Create(source);
@@ -405,6 +416,9 @@ class FstFarReader final : public FarReader<A> {
     for (size_t i = 0; i < keys_.size(); ++i) {
       if (keys_[i].empty()) {
         if (!has_stdin_) {
+  #ifdef _WIN32
+            _setmode(_fileno(stdin), _O_BINARY);
+  #endif
           streams_[i] = &std::cin;
           has_stdin_ = true;
         } else {
@@ -468,6 +482,9 @@ class FstFarReader final : public FarReader<A> {
 
   ~FstFarReader() final {
     for (size_t i = 0; i < keys_.size(); ++i) {
+        #ifdef _WIN32
+          _setmode(_fileno(stdin), _O_BINARY);
+        #endif
       if (streams_[i] != &std::cin) {
         delete streams_[i];
       }

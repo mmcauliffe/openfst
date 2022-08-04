@@ -31,10 +31,11 @@
 #include <fst/extensions/pdt/pdt.h>
 #include <unordered_map>
 #include <optional>
+#include <fst/exports/exports.h>
 
 namespace fst {
 
-enum class MPdtType : uint8_t {
+enum class fstmpdtscript_EXPORT MPdtType : uint8_t {
   READ_RESTRICT,   // Can only read from first empty stack
   WRITE_RESTRICT,  // Can only write to first empty stack
   NO_RESTRICT,     // No read-write restrictions

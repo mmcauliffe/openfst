@@ -33,6 +33,7 @@
 #include <vector>
 
 #include <fst/compat.h>
+#include <fst/exports/exports.h>
 #include <fst/flags.h>
 #include <fst/log.h>
 #include <fstream>
@@ -43,15 +44,15 @@
 #include <fst/lock.h>
 
 
-DECLARE_bool(fst_compat_symbols);
+DECLARE_export_bool(fst_compat_symbols, fst_EXPORT);
 
 namespace fst {
 
 inline constexpr int64_t kNoSymbol = -1;
 
-class SymbolTable;
+class fst_EXPORT SymbolTable;
 
-struct SymbolTableTextOptions {
+struct fst_EXPORT SymbolTableTextOptions {
   explicit SymbolTableTextOptions(bool allow_negative_labels = false);
 
   bool allow_negative_labels;
@@ -152,9 +153,6 @@ class SymbolTableImplBase {
 
   virtual bool IsMutable() const = 0;
 };
-
-
-template class std::shared_ptr<internal::SymbolTableImplBase>;
 
 // Base class for SymbolTable implementations supporting Add/Remove.
 class MutableSymbolTableImpl : public SymbolTableImplBase {
@@ -577,14 +575,14 @@ SymbolTable *RelabelSymbolTable(
 
 // Returns true if the two symbol tables have equal checksums. Passing in
 // nullptr for either table always returns true.
-bool CompatSymbols(const SymbolTable *syms1, const SymbolTable *syms2,
+bool fst_EXPORT CompatSymbols(const SymbolTable *syms1, const SymbolTable *syms2,
                    bool warning = true);
 
 // Symbol table serialization.
 
-void SymbolTableToString(const SymbolTable *table, std::string *result);
+void fst_EXPORT SymbolTableToString(const SymbolTable *table, std::string *result);
 
-SymbolTable *StringToSymbolTable(const std::string &str);
+SymbolTable fst_EXPORT *StringToSymbolTable(const std::string &str);
 
 }  // namespace fst
 

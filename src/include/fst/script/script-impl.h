@@ -104,11 +104,12 @@
 #include <fst/log.h>
 #include <fst/generic-register.h>
 #include <fst/script/fst-class.h>
+#include <fst/exports/exports.h>
 
 namespace fst {
 namespace script {
 
-enum class RandArcSelection : uint8_t { UNIFORM, LOG_PROB, FAST_LOG_PROB };
+enum class fstscript_EXPORT RandArcSelection : uint8_t { UNIFORM, LOG_PROB, FAST_LOG_PROB };
 
 // A generic register for operations with various kinds of signatures.
 // Needed since every function signature requires a new registration class.

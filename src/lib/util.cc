@@ -28,21 +28,15 @@
 #include <fst/flags.h>
 #include <fst/log.h>
 #include <fst/mapped-file.h>
+#include <fst/exports/exports.h>
 #include <string_view>
 #include <optional>
 
 // Utility flag definitions
 
-#ifdef fst_EXPORT
-bool FST_FLAGS_fst_error_fatal = true;                                            
-static FlagRegisterer<bool>                                                 
-fst_error_fatal_flags_registerer("fst_error_fatal", FlagDescription<bool>(&FST_FLAGS_fst_error_fatal, 
-    "FST errors are fatal; o.w. return objects flagged as bad: "
-    "e.g., FSTs: kError property set, FST weights: not a Member()", 
-    "bool", 
-    __FILE__, 
-    true));
-#endif
+DEFINE_bool(fst_error_fatal, true,
+            "FST errors are fatal; o.w. return objects flagged as bad: "
+            "e.g., FSTs: kError property set, FST weights: not a Member()");
 
 namespace fst {
 

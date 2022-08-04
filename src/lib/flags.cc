@@ -29,41 +29,17 @@
 
 #include <fst/exports/exports.h>
 
-#ifdef fst_EXPORTS
+FlagSingleton& GetFlagSingleton() {
+    static FlagSingleton _instance;
+    return _instance;
+};
+static const char* private_tmpdir = getenv("TMPDIR");
 
-int32_t FST_FLAGS_v = false;                                            
-static FlagRegisterer<int32_t>                                                 
-v_flags_registerer("v", FlagDescription<int32_t>(&FST_FLAGS_v, 
-    "verbosity level", 
-    "int32_t", 
-    __FILE__, 
-    0));
-
-bool FST_FLAGS_help = false;                                            
-static FlagRegisterer<bool>                                                 
-help_flags_registerer("help", FlagDescription<bool>(&FST_FLAGS_help, 
-    "show usage information", 
-    "bool", 
-    __FILE__, 
-    false));
-
-bool FST_FLAGS_helpshort = false;                                            
-static FlagRegisterer<bool>                                                 
-helpshort_flags_registerer("helpshort", FlagDescription<bool>(&FST_FLAGS_helpshort, 
-    "show brief usage information", 
-    "bool", 
-    __FILE__, 
-    false));
-
-const char* private_tmpdir = getenv("TMPDIR");
-std::string FST_FLAGS_tmpdir = private_tmpdir ? private_tmpdir : "/tmp";                                            \
-static FlagRegisterer<std::string>                                                 
-tmpdir_flags_registerer("tmpdir", FlagDescription<std::string>(&FST_FLAGS_tmpdir, 
-    "temporary directory", 
-    "std::string", 
-    __FILE__, 
-    private_tmpdir ? private_tmpdir : "/tmp"));
-#endif
+DEFINE_int32(v, 0, "verbosity level");
+DEFINE_bool(help, false, "show usage information");
+DEFINE_bool(helpshort, false, "show brief usage information");
+DEFINE_string(tmpdir, private_tmpdir ? private_tmpdir : "/tmp",
+            "temporary directory");
 
 static std::string flag_usage;
 static std::string prog_src;

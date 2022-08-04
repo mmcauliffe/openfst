@@ -22,10 +22,18 @@
 #include <istream>
 #include <string>
 #include <vector>
+#ifdef _WIN32
+#include <io.h>
+#endif
+#include <fcntl.h>
+#include <iostream>
 
 #include <fst/extensions/far/far.h>
 #include <fstream>
 #include <fst/string.h>
+#include <fst/exports/exports.h>
+
+DECLARE_export_string(far_field_separator, fstfarscript_EXPORT);
 
 namespace fst {
 namespace internal {
@@ -131,7 +139,7 @@ class StringReader {
 
 // Computes the minimal length required to encode each line number as a decimal
 // number, or zero if the file is not seekable.
-int KeySize(const std::string &source);
+int fstfarscript_EXPORT KeySize(const std::string &source);
 
 }  // namespace internal
 
@@ -191,12 +199,17 @@ void CompileStrings(const std::vector<std::string> &sources,
     }
     std::ifstream fstrm;
     if (!in_source.empty()) {
-      fstrm.open(in_source);
+      fstrm.open(in_source, std::ios_base::in | std::ios_base::binary);
       if (!fstrm) {
         FSTERROR() << "CompileStrings: Can't open file: " << in_source;
         return;
       }
     }
+    #ifdef _WIN32
+    if (!fstrm.is_open()) {
+        _setmode(_fileno(stdin), _O_BINARY);
+    }
+    #endif
     std::istream &istrm = fstrm.is_open() ? fstrm : std::cin;
     bool keep_syms = keep_symbols;
     for (internal::StringReader<Arc> reader(

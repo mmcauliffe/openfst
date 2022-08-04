@@ -28,6 +28,7 @@
 #include <string>
 
 #include <fst/flags.h>
+#include <fst/exports/exports.h>
 
 namespace fst {
 
@@ -48,7 +49,7 @@ struct MemoryRegion {
 #endif
 };
 
-class MappedFile {
+class fst_EXPORT MappedFile {
  public:
   ~MappedFile();
 

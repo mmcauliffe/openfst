@@ -25,16 +25,20 @@
 #include <utility>
 
 #include <fst/encode.h>
-#include <fst/generic-register.h>
 #include <fst/script/arc-class.h>
 #include <fst/script/fst-class.h>
+#include <fst/generic-register.h>
+#include <fst/exports/exports.h>
 #include <string_view>
+
+#include <fst/script/script-impl.h>
 
 // Scripting API support for EncodeMapper.
 
 namespace fst {
 namespace script {
 
+    class fstscript_EXPORT EncodeMapperImplBase;
 // Virtual interface implemented by each concrete EncodeMapperClassImpl<Arc>.
 class EncodeMapperImplBase {
  public:

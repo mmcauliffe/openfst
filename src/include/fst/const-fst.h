@@ -462,10 +462,6 @@ class ArcIterator<ConstFst<Arc, Unsigned>> {
 // A useful alias when using StdArc.
 using StdConstFst = ConstFst<StdArc>;
 
-inline static FstRegisterer<ConstFst<StdArc>> ConstFst_StdArc_registerer;
-inline static FstRegisterer<ConstFst<LogArc>> ConstFst_LogArc_registerer;
-inline static FstRegisterer<ConstFst<Log64Arc>> ConstFst_Log64Arc_registerer;
-
 }  // namespace fst
 
 #endif  // FST_CONST_FST_H_

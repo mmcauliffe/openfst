@@ -28,50 +28,17 @@
 #include <fstream>
 #include <fst/script/script-impl.h>
 
-#ifdef fstlinearscript_EXPORTS
+DEFINE_string(delimiter, "|",
+            "Single non-white-space character delimiter inside sequences of "
+            "feature symbols and output symbols");
+DEFINE_string(empty_symbol, "<empty>",
+            "Special symbol that designates an empty sequence");
 
-std::string FST_FLAGS_delimiter = "|";                                            
-static FlagRegisterer<std::string>                                                 
-delimiter_flags_registerer("delimiter", FlagDescription<std::string>(&FST_FLAGS_delimiter, 
-    "Single non-white-space character delimiter inside sequences of "
-    "feature symbols and output symbols", 
-    "std::string", 
-    __FILE__, 
-    "|"));
+DEFINE_string(start_symbol, "<s>", "Start of sentence symbol");
+DEFINE_string(end_symbol, "</s>", "End of sentence symbol");
 
-std::string FST_FLAGS_empty_symbol = "<empty>";                                            
-static FlagRegisterer<std::string>                                                 
-empty_symbol_flags_registerer("empty_symbol", FlagDescription<std::string>(&FST_FLAGS_empty_symbol, 
-    "Special symbol that designates an empty sequence", 
-    "std::string", 
-    __FILE__, 
-    "<empty>"));
-
-std::string FST_FLAGS_start_symbol = "<s>";                                            
-static FlagRegisterer<std::string>                                                 
-start_symbol_flags_registerer("start_symbol", FlagDescription<std::string>(&FST_FLAGS_start_symbol, 
-    "Start of sentence symbol", 
-    "std::string", 
-    __FILE__, 
-    "<s>"));
-
-std::string FST_FLAGS_end_symbol = "</s>";                                            
-static FlagRegisterer<std::string>                                                 
-end_symbol_flags_registerer("end_symbol", FlagDescription<std::string>(&FST_FLAGS_end_symbol, 
-    "End of sentence symbol", 
-    "std::string", 
-    __FILE__, 
-    "</s>"));
-
-bool FST_FLAGS_classifier = false;                                            
-static FlagRegisterer<bool>                                                 
-classifier_flags_registerer("classifier", FlagDescription<bool>(&FST_FLAGS_classifier, 
-    "Treat input model as a classifier instead of a tagger", 
-    "bool", 
-    __FILE__, 
-    false));
-
-#endif
+DEFINE_bool(classifier, false,
+            "Treat input model as a classifier instead of a tagger");
 
 namespace fst {
 namespace script {
@@ -102,10 +69,8 @@ void LinearCompile(const std::string &arc_type,
                          save_osymbols);
   Apply<Operation<LinearCompileArgs>>("LinearCompileTpl", arc_type, &args);
 }
-#ifndef _WIN32
 
 REGISTER_FST_OPERATION_3ARCS(LinearCompileTpl, LinearCompileArgs);
-#endif
 
 void SplitByWhitespace(const std::string &str, std::vector<std::string> *out) {
   out->clear();
@@ -117,7 +82,7 @@ void SplitByWhitespace(const std::string &str, std::vector<std::string> *out) {
 int ScanNumClasses(char **models, int models_len) {
   std::set<std::string> preds;
   for (int i = 0; i < models_len; ++i) {
-    std::ifstream in(models[i]);
+    std::ifstream in(models[i], std::ios_base::in | std::ios_base::binary);
     if (!in) LOG(FATAL) << "Failed to open " << models[i];
     std::string line;
     std::getline(in, line);

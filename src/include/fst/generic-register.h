@@ -28,8 +28,10 @@
 #endif
 #include <map>
 #include <string>
+#include <typeinfo>
 
 #include <fst/log.h>
+#include <fst/exports/exports.h>
 
 // Generic class representing a globally-stored correspondence between
 // objects of KeyType and EntryType.
@@ -43,6 +45,7 @@
 // The third template parameter should be the type of a subclass of this class
 // (think CRTP). This is to allow GetRegister() to instantiate and return an
 // object of the appropriate type.
+
 
 namespace fst {
 
@@ -58,16 +61,36 @@ struct KeyLookupReferenceType<std::string> {
 };
 }  // namespace internal
 
+class RegisterBase { };
+
+class Singleton {
+public:
+
+    template <class RegisterType>
+    std::shared_ptr<RegisterType> GetRegister() {
+
+        std::string type_name = typeid(RegisterType).name();
+        if (registry.find(type_name) == registry.end()) {
+            std::shared_ptr<RegisterType> r = std::make_shared<RegisterType>();
+            registry[type_name] = std::static_pointer_cast <RegisterBase>(r);
+        }
+        return  std::static_pointer_cast <RegisterType>(registry[type_name]);
+    }
+private:
+    std::map<std::string, std::shared_ptr<RegisterBase>> registry;
+};
+
+fst_EXPORT Singleton& GetSingleton();
+
 template <class KeyType, class EntryType, class RegisterType>
-class GenericRegister {
+class GenericRegister : public RegisterBase {
  public:
   using Key = KeyType;
   using KeyLookupRef = typename internal::KeyLookupReferenceType<KeyType>::type;
   using Entry = EntryType;
 
   static RegisterType *GetRegister() {
-    static auto reg = new RegisterType;
-    return reg;
+      return GetSingleton().GetRegister<RegisterType>().get();
   }
 
   void SetEntry(const KeyType &key, const EntryType &entry) {
@@ -133,6 +156,7 @@ class GenericRegister {
   std::map<KeyType, EntryType, std::less<>> register_table_;
 };
 
+
 // Generic register-er class capable of creating new register entries in the
 // given RegisterType template parameter. This type must define types Key and
 // Entry, and have appropriate static GetRegister() and instance SetEntry()
@@ -145,7 +169,7 @@ class GenericRegisterer {
   using Entry = typename RegisterType::Entry;
 
   GenericRegisterer(Key key, Entry entry) {
-    RegisterType::GetRegister()->SetEntry(key, entry);
+      GetSingleton().GetRegister<RegisterType>()->SetEntry(key, entry);
   }
 };
 

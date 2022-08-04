@@ -23,6 +23,9 @@
 #include <fst/epsnormalize.h>
 #include <fst/script/fst-class.h>
 
+#include <fst/exports/exports.h>
+#include <fst/script/script-impl.h>
+
 namespace fst {
 namespace script {
 
@@ -36,7 +39,7 @@ void EpsNormalize(FstEpsNormalizeArgs *args) {
   EpsNormalize(ifst, ofst, std::get<2>(*args));
 }
 
-void EpsNormalize(const FstClass &ifst, MutableFstClass *ofst,
+void fstscript_EXPORT EpsNormalize(const FstClass &ifst, MutableFstClass *ofst,
                   EpsNormalizeType norm_type = EPS_NORM_INPUT);
 
 }  // namespace script

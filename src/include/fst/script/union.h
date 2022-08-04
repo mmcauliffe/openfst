@@ -24,6 +24,9 @@
 #include <fst/union.h>
 #include <fst/script/fst-class.h>
 
+#include <fst/script/script-impl.h>
+#include <fst/exports/exports.h>
+
 namespace fst {
 namespace script {
 
@@ -51,9 +54,9 @@ void Union(FstUnionArgs2 *args) {
   Union(fst1, typed_fsts2);
 }
 
-void Union(MutableFstClass *fst1, const FstClass &fst2);
+void fstscript_EXPORT Union(MutableFstClass *fst1, const FstClass &fst2);
 
-void Union(MutableFstClass *fst1, const std::vector<const FstClass *> &fsts2);
+void fstscript_EXPORT Union(MutableFstClass *fst1, const std::vector<const FstClass *> &fsts2);
 
 }  // namespace script
 }  // namespace fst

@@ -18,80 +18,32 @@
 // FST definitions.
 
 #include <fst/fst.h>
+#include <fst/cache.h>
+#include <fst/lookahead-matcher.h>
 
 #include <cstdint>
 #include <sstream>
 
 #include <fst/flags.h>
 #include <fst/log.h>
+#include <fst/exports/exports.h>
 
 // FST flag definitions.
+DEFINE_bool(fst_verify_properties, false,
+            "Verify FST properties queried by TestProperties");
 
-#ifdef fst_EXPORTS
+DEFINE_bool(fst_default_cache_gc, true, "Enable garbage collection of cache");
 
+DEFINE_int64(fst_default_cache_gc_limit, 1 << 20LL,
+            "Cache byte size that triggers garbage collection");
 
-bool FST_FLAGS_fst_verify_properties = false;                                            \
-static FlagRegisterer<bool>                                                 \
-fst_verify_properties_flags_registerer("fst_verify_properties", FlagDescription<bool>(&FST_FLAGS_fst_verify_properties, \
-    "Verify FST properties queried by TestProperties", \
-    "bool", \
-    __FILE__, \
-    false));
+DEFINE_bool(fst_align, false, "Write FST data aligned where appropriate");
 
+DEFINE_string(save_relabel_ipairs, "", "Save input relabel pairs to file");
+DEFINE_string(save_relabel_opairs, "", "Save output relabel pairs to file");
 
-bool FST_FLAGS_fst_default_cache_gc = true;                                            
-static FlagRegisterer<bool>                                                 
-fst_default_cache_gc_flags_registerer("fst_default_cache_gc", FlagDescription<bool>(&FST_FLAGS_fst_default_cache_gc, 
-    "Enable garbage collection of cache", 
-    "bool", 
-    __FILE__, 
-    true));
-
-
-int64_t FST_FLAGS_fst_default_cache_gc_limit = 1 << 20LL;                                            
-static FlagRegisterer<int64_t>                                                 
-fst_default_cache_gc_limit_flags_registerer("fst_default_cache_gc_limit", FlagDescription<int64_t>(&FST_FLAGS_fst_default_cache_gc_limit,
-    "Cache byte size that triggers garbage collection", 
-    "int64_t", 
-    __FILE__, 
-    1 << 20LL));
-
-bool FST_FLAGS_fst_align = false;                                            
-static FlagRegisterer<bool>                                                 
-fst_align_flags_registerer("fst_align", FlagDescription<bool>(&FST_FLAGS_fst_align, 
-    "Write FST data aligned where appropriate", 
-    "bool", 
-    __FILE__, 
-    false));
-
-std::string FST_FLAGS_save_relabel_ipairs = "";                                            
-static FlagRegisterer<std::string>                                                 
-save_relabel_ipairs_flags_registerer("save_relabel_ipairs", FlagDescription<std::string>(&FST_FLAGS_save_relabel_ipairs, 
-    "Save input relabel pairs to file", 
-    "std::string", 
-    __FILE__, 
-    ""));
-
-
-std::string FST_FLAGS_save_relabel_opairs = " ";                                            
-static FlagRegisterer<std::string>                                                 
-save_relabel_opairs_flags_registerer("save_relabel_opairs", FlagDescription<std::string>(&FST_FLAGS_save_relabel_opairs, 
-    "Save output relabel pairs to file", 
-    "std::string", 
-    __FILE__, 
-    ""));
-
-
-std::string FST_FLAGS_fst_read_mode = "read";                                            \
-static FlagRegisterer<std::string>                                                 \
-fst_read_mode_flags_registerer("fst_read_mode", FlagDescription<std::string>(&FST_FLAGS_fst_read_mode, \
-    "Default file reading mode for mappable files", \
-    "std::string", \
-    __FILE__, \
-    "read"));
-
-#endif // fst_EXPORTS
-
+DEFINE_string(fst_read_mode, "read",
+            "Default file reading mode for mappable files");
 
 
 namespace fst {

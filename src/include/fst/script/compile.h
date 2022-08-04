@@ -25,6 +25,10 @@
 #include <fst/script/arg-packs.h>
 #include <fst/script/compile-impl.h>
 #include <fst/script/fst-class.h>
+#include <fst/exports/exports.h>
+
+
+#include <fst/script/script-impl.h>
 
 namespace fst {
 namespace script {
@@ -38,7 +42,7 @@ namespace script {
 // this struct is only used to pass them deeper in the call graph.
 // Be sure you understand why this is so before using this struct
 // for anything else!
-struct FstCompileInnerArgs {
+struct fstscript_EXPORT FstCompileInnerArgs {
   std::istream &istrm;
   const std::string &source;
   const std::string &fst_type;
@@ -79,13 +83,13 @@ void CompileInternal(FstCompileArgs *args) {
   args->retval = fst ? std::make_unique<FstClass>(std::move(fst)) : nullptr;
 }
 
-void Compile(std::istream &istrm, const std::string &source,
+void fstscript_EXPORT Compile(std::istream &istrm, const std::string &source,
              const std::string &dest, const std::string &fst_type,
              const std::string &arc_type, const SymbolTable *isyms,
              const SymbolTable *osyms, const SymbolTable *ssyms, bool accep,
              bool ikeep, bool okeep, bool nkeep, bool allow_negative_labels);
 
-std::unique_ptr<FstClass> CompileInternal(
+std::unique_ptr<FstClass> fstscript_EXPORT CompileInternal(
     std::istream &istrm, const std::string &source, const std::string &fst_type,
     const std::string &arc_type, const SymbolTable *isyms,
     const SymbolTable *osyms, const SymbolTable *ssyms, bool accep, bool ikeep,

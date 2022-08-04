@@ -41,7 +41,7 @@
 #define OPENFST_DEPRECATED(message)
 #endif
 
-void FailedNewHandler();
+void fst_EXPORT FailedNewHandler();
 
 #ifdef _WIN32
 
@@ -106,6 +106,7 @@ constexpr To implicit_cast(typename internal::type_identity_t<To> to) {
   return to;
 }
 
+class fst_EXPORT CheckSummer;
 // Checksums.
 class CheckSummer {
  public:
@@ -230,6 +231,7 @@ struct ByAnyChar {
 
 namespace internal {
 
+    class fst_EXPORT StringSplitter;
 class StringSplitter {
  public:
   using const_iterator = std::vector<std::string_view>::const_iterator;
@@ -270,15 +272,17 @@ class StringSplitter {
 // `StrSplit` replacements. Only support splitting on `char` or
 // `ByAnyChar` (notable not on a multi-char string delimiter), and with or
 // without `SkipEmpty`.
-internal::StringSplitter StrSplit(std::string_view full, ByAnyChar delim);
-internal::StringSplitter StrSplit(std::string_view full, char delim);
-internal::StringSplitter StrSplit(std::string_view full, ByAnyChar delim,
+internal::StringSplitter fst_EXPORT StrSplit(std::string_view full, ByAnyChar delim);
+internal::StringSplitter fst_EXPORT StrSplit(std::string_view full, char delim);
+internal::StringSplitter fst_EXPORT StrSplit(std::string_view full, ByAnyChar delim,
                                   SkipEmpty);
-internal::StringSplitter StrSplit(std::string_view full, char delim, SkipEmpty);
+internal::StringSplitter fst_EXPORT StrSplit(std::string_view full, char delim, SkipEmpty);
 
-void StripTrailingAsciiWhitespace(std::string *full);
+void fst_EXPORT StripTrailingAsciiWhitespace(std::string *full);
 
-std::string_view StripTrailingAsciiWhitespace(std::string_view full);
+std::string_view fst_EXPORT StripTrailingAsciiWhitespace(std::string_view full);
+
+class fst_EXPORT StringOrInt;
 
 class StringOrInt {
  public:
@@ -298,21 +302,21 @@ class StringOrInt {
 
 // TODO(kbg): Make this work with variadic template, maybe.
 
-inline std::string StrCat(const StringOrInt &s1, const StringOrInt &s2) {
+inline std::string fst_EXPORT StrCat(const StringOrInt &s1, const StringOrInt &s2) {
   return s1.Get() + s2.Get();
 }
 
-inline std::string StrCat(const StringOrInt &s1, const StringOrInt &s2,
+inline std::string fst_EXPORT StrCat(const StringOrInt &s1, const StringOrInt &s2,
                           const StringOrInt &s3) {
   return s1.Get() + StrCat(s2, s3);
 }
 
-inline std::string StrCat(const StringOrInt &s1, const StringOrInt &s2,
+inline std::string fst_EXPORT StrCat(const StringOrInt &s1, const StringOrInt &s2,
                           const StringOrInt &s3, const StringOrInt &s4) {
   return s1.Get() + StrCat(s2, s3, s4);
 }
 
-inline std::string StrCat(const StringOrInt &s1, const StringOrInt &s2,
+inline std::string fst_EXPORT StrCat(const StringOrInt &s1, const StringOrInt &s2,
                           const StringOrInt &s3, const StringOrInt &s4,
                           const StringOrInt &s5) {
   return s1.Get() + StrCat(s2, s3, s4, s5);
@@ -320,13 +324,13 @@ inline std::string StrCat(const StringOrInt &s1, const StringOrInt &s2,
 
 // TODO(agutkin): Remove this once we migrate to C++20, where `starts_with`
 // is available.
-inline bool StartsWith(std::string_view text, std::string_view prefix) {
+inline bool fst_EXPORT StartsWith(std::string_view text, std::string_view prefix) {
   return prefix.empty() ||
          (text.size() >= prefix.size() &&
           memcmp(text.data(), prefix.data(), prefix.size()) == 0);
 }
 
-inline bool ConsumePrefix(std::string_view *s, std::string_view expected) {
+inline bool fst_EXPORT ConsumePrefix(std::string_view *s, std::string_view expected) {
   if (!StartsWith(*s, expected)) return false;
   s->remove_prefix(expected.size());
   return true;

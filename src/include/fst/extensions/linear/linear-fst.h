@@ -26,6 +26,11 @@
 #include <memory>
 #include <string>
 #include <vector>
+#ifdef _WIN32
+#include <io.h>
+#endif
+#include <fcntl.h>
+#include <iostream>
 
 #include <fst/compat.h>
 #include <fst/log.h>
@@ -513,6 +518,9 @@ class LinearTaggerFst : public ImplToFst<internal::LinearTaggerFstImpl<A>> {
       }
       return Read(strm, FstReadOptions(source));
     } else {
+        #ifdef _WIN32
+          _setmode(_fileno(stdin), _O_BINARY);
+        #endif
       return Read(std::cin, FstReadOptions("standard input"));
     }
   }
@@ -533,6 +541,9 @@ class LinearTaggerFst : public ImplToFst<internal::LinearTaggerFstImpl<A>> {
       }
       return Write(strm, FstWriteOptions(source));
     } else {
+      #ifdef _WIN32
+        _setmode(_fileno(stdout), _O_BINARY);
+      #endif
       return Write(std::cout, FstWriteOptions("standard output"));
     }
   }
@@ -964,6 +975,9 @@ class LinearClassifierFst
       }
       return Read(strm, FstReadOptions(source));
     } else {
+        #ifdef _WIN32
+          _setmode(_fileno(stdin), _O_BINARY);
+        #endif
       return Read(std::cin, FstReadOptions("standard input"));
     }
   }
@@ -985,6 +999,9 @@ class LinearClassifierFst
       }
       return Write(strm, FstWriteOptions(source));
     } else {
+      #ifdef _WIN32
+        _setmode(_fileno(stdout), _O_BINARY);
+      #endif
       return Write(std::cout, FstWriteOptions("standard output"));
     }
   }

@@ -33,6 +33,7 @@
 #include <fst/vector-fst.h>
 #include <unordered_map>
 #include <string_view>
+#include <fst/exports/exports.h>
 
 namespace fst {
 

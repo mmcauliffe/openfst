@@ -22,7 +22,7 @@
 
 #include <fst/extensions/far/script-impl.h>
 #include <fst/arc.h>
-#include <fst/script/script-impl.h>
+#include <fst/exports/exports.h>
 
 namespace fst {
 namespace script {
@@ -68,8 +68,6 @@ std::unique_ptr<FarWriterClass> FarWriterClass::Create(
   return std::move(args.retval);
 }
 
-#ifndef _WIN32
-
 REGISTER_FST_OPERATION(OpenFarReaderClass, StdArc, OpenFarReaderClassArgs);
 REGISTER_FST_OPERATION(OpenFarReaderClass, LogArc, OpenFarReaderClassArgs);
 REGISTER_FST_OPERATION(OpenFarReaderClass, Log64Arc, OpenFarReaderClassArgs);
@@ -80,7 +78,7 @@ REGISTER_FST_OPERATION(CreateFarWriterClass, Log64Arc,
     CreateFarWriterClassArgs);
 REGISTER_FST_OPERATION(CreateFarWriterClass, ErrorArc,
     CreateFarWriterClassArgs);
-#endif
+
 
 
 }  // namespace script

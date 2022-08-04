@@ -1612,27 +1612,6 @@ using StdCompactUnweightedFst = CompactUnweightedFst<StdArc, uint32_t>;
 using StdCompactUnweightedAcceptorFst =
     CompactUnweightedAcceptorFst<StdArc, uint32_t>;
 
-inline static FstRegisterer<CompactStringFst<StdArc>> CompactStringFst_StdArc_registerer;
-inline static FstRegisterer<CompactStringFst<LogArc>> CompactStringFst_LogArc_registerer;
-inline static FstRegisterer<CompactStringFst<Log64Arc>> CompactStringFst_Log64Arc_registerer;
-
-inline static FstRegisterer<CompactWeightedStringFst<StdArc>> CompactWeightedStringFst_StdArc_registerer;
-inline static FstRegisterer<CompactWeightedStringFst<LogArc>> CompactWeightedStringFst_LogArc_registerer;
-inline static FstRegisterer<CompactWeightedStringFst<Log64Arc>> CompactWeightedStringFst_Log64Arc_registerer;
-
-inline static FstRegisterer<CompactAcceptorFst<StdArc>> CompactAcceptorFst_StdArc_registerer;
-inline static FstRegisterer<CompactAcceptorFst<LogArc>> CompactAcceptorFst_LogArc_registerer;
-inline static FstRegisterer<CompactAcceptorFst<Log64Arc>> CompactAcceptorFst_Log64Arc_registerer;
-
-inline static FstRegisterer<CompactUnweightedFst<StdArc>> CompactUnweightedFst_StdArc_registerer;
-inline static FstRegisterer<CompactUnweightedFst<LogArc>> CompactUnweightedFst_LogArc_registerer;
-inline static FstRegisterer<CompactUnweightedFst<Log64Arc>> CompactUnweightedFst_Log64Arc_registerer;
-
-inline static FstRegisterer<CompactUnweightedAcceptorFst<StdArc>> CompactUnweightedAcceptorFst_StdArc_registerer;
-inline static FstRegisterer<CompactUnweightedAcceptorFst<LogArc>> CompactUnweightedAcceptorFst_LogArc_registerer;
-inline static FstRegisterer<CompactUnweightedAcceptorFst<Log64Arc>> CompactUnweightedAcceptorFst_Log64Arc_registerer;
-
-
 // Convenience function to make a CompactStringFst from a sequence
 // of Arc::Labels. LabelIterator must be an input iterator.
 template <class Arc, class Unsigned = uint32_t, class LabelIterator>

@@ -23,7 +23,7 @@ set_target_properties(fstcompact PROPERTIES
 GENERATE_EXPORT_HEADER( fstcompact
              BASE_NAME fstcompact
              EXPORT_MACRO_NAME fstcompact_EXPORT
-             EXPORT_FILE_NAME ${CMAKE_BINARY_DIR}/include/fst/export/fstcompact_Export.h
+             EXPORT_FILE_NAME ${CMAKE_BINARY_DIR}/include/fst/exports/fstcompact_Export.h
              STATIC_DEFINE fstcompact_BUILT_AS_STATIC
 )
 target_compile_definitions(fstcompact PRIVATE fstcompact_EXPORTS)

@@ -28,6 +28,7 @@
 #include <fst/matcher-fst.h>
 #include <fst/matcher.h>
 #include <fst/register.h>
+#include <fst/exports/exports.h>
 
 DECLARE_export_int64(phi_fst_phi_label,  fstspecial_EXPORT);
 DECLARE_export_bool(phi_fst_phi_loop, fstspecial_EXPORT);
@@ -181,21 +182,6 @@ using OutputPhiFst =
                output_phi_fst_type>;
 
 using StdOutputPhiFst = OutputPhiFst<StdArc>;
-
-#ifdef _WIN32
-
-inline static FstRegisterer<PhiFst<StdArc>> PhiFst_StdArc_registerer;
-inline static FstRegisterer<PhiFst<LogArc>> PhiFst_LogArc_registerer;
-inline static FstRegisterer<PhiFst<Log64Arc>> PhiFst_Log64Arc_registerer;
-
-inline static FstRegisterer<InputPhiFst<StdArc>> InputPhiFst_StdArc_registerer;
-inline static FstRegisterer<InputPhiFst<LogArc>> InputPhiFst_LogArc_registerer;
-inline static FstRegisterer<InputPhiFst<Log64Arc>> InputPhiFst_Log64Arc_registerer;
-
-inline static FstRegisterer<OutputPhiFst<StdArc>> OutputPhiFst_StdArc_registerer;
-inline static FstRegisterer<OutputPhiFst<LogArc>> OutputPhiFst_LogArc_registerer;
-inline static FstRegisterer<OutputPhiFst<Log64Arc>> OutputPhiFst_Log64Arc_registerer;
-#endif
 
 }  // namespace fst
 

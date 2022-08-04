@@ -83,12 +83,32 @@ struct FlagDescription {
   const T default_value;
 };
 
+class FlagRegisterBase { };
+
+class FlagSingleton {
+public:
+
+    template <class RegisterType>
+    std::shared_ptr<RegisterType> GetRegister() {
+
+        std::string type_name = typeid(RegisterType).name();
+        if (registry.find(type_name) == registry.end()) {
+            std::shared_ptr<RegisterType> r = std::make_shared<RegisterType>();
+            registry[type_name] = std::static_pointer_cast <FlagRegisterBase>(r);
+        }
+        return  std::static_pointer_cast <RegisterType>(registry[type_name]);
+    }
+private:
+    std::map<std::string, std::shared_ptr<FlagRegisterBase>> registry;
+};
+
+fst_EXPORT FlagSingleton& GetFlagSingleton();
+
 template <typename T>
-class FlagRegister {
+class FlagRegister: public FlagRegisterBase {
  public:
   static FlagRegister<T> *GetRegister() {
-    static auto reg = new FlagRegister<T>;
-    return reg;
+      return GetFlagSingleton().GetRegister<FlagRegister<T>>().get();
   }
 
   const FlagDescription<T> &GetFlagDescription(const std::string &name) const {
@@ -191,8 +211,7 @@ template <typename T>
 class FlagRegisterer {
  public:
   FlagRegisterer(const std::string &name, const FlagDescription<T> &desc) {
-    auto registr = FlagRegister<T>::GetRegister();
-    registr->SetDescription(name, desc);
+    GetFlagSingleton().GetRegister<FlagRegister<T>>()->SetDescription(name, desc);
   }
 
  private:
@@ -222,7 +241,7 @@ class FlagRegisterer {
 // Temporary directory.
 DECLARE_export_string(tmpdir, fst_EXPORT);
 
-void SetFlags(const char *usage, int *argc, char ***argv, bool remove_flags,
+void fst_EXPORT SetFlags(const char *usage, int *argc, char ***argv, bool remove_flags,
               const char *src = "");
 
 // This is an unpleasant hack around SetFlag API.
@@ -239,6 +258,6 @@ inline void InitFst(const char *usage, int *argc, char ***argv, bool rmflags) {
   return SetFlags(usage, argc, argv, rmflags);
 }
 
-void ShowUsage(bool long_usage = true);
+void fst_EXPORT ShowUsage(bool long_usage = true);
 
 #endif  // FST_FLAGS_H_

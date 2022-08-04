@@ -21,24 +21,25 @@
 #define FST_SCRIPT_FSTSCRIPT_DECL_H_
 
 #include <fst/fst-decl.h>
+#include <fst/exports/exports.h>
 
 namespace fst {
 namespace script {
 
-class ArcClass;
+class fstscript_EXPORT ArcClass;
 
-class ArcIteratorClass;
-class MutableArcIteratorClass;
+class fstscript_EXPORT ArcIteratorClass;
+class fstscript_EXPORT MutableArcIteratorClass;
 
-class EncodeMapperClass;
+class fstscript_EXPORT EncodeMapperClass;
 
-class FstClass;
-class MutableFstClass;
-class VectorFstClass;
+class fstscript_EXPORT FstClass;
+class fstscript_EXPORT MutableFstClass;
+class fstscript_EXPORT VectorFstClass;
 
-class StateIteratorClass;
+class fstscript_EXPORT StateIteratorClass;
 
-class WeightClass;
+class fstscript_EXPORT WeightClass;
 
 }  // namespace script
 }  // namespace fst

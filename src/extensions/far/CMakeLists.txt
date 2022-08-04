@@ -1,9 +1,7 @@
-file(GLOB HEADER_FILES ../../include/fst/extensions/far/*.h)
 
 add_library(fstfar
   sttable.cc
   stlist.cc
-  ${HEADER_FILES}
 )
 target_link_libraries(fstfar fst)
 set_target_properties(fstfar PROPERTIES 
@@ -13,10 +11,10 @@ set_target_properties(fstfar PROPERTIES
 GENERATE_EXPORT_HEADER( fstfar
              BASE_NAME fstfar
              EXPORT_MACRO_NAME fstfar_EXPORT
-             EXPORT_FILE_NAME ${CMAKE_BINARY_DIR}/include/fst/export/fstfar_Export.h
+             EXPORT_FILE_NAME ${CMAKE_BINARY_DIR}/include/fst/exports/fstfar_Export.h
              STATIC_DEFINE fstfar_BUILT_AS_STATIC
 )
-target_compile_definitions(fstfar PUBLIC fstfar_EXPORTS)
+target_compile_definitions(fstfar PRIVATE fstfar_EXPORTS)
 target_include_directories(fstfar PUBLIC $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/include>
                            $<INSTALL_INTERFACE:include>)
 
@@ -35,22 +33,19 @@ if(HAVE_SCRIPT)
     script-impl.cc
   )
   if (MSVC)
-    target_link_libraries(fstfarscript fstfar fstscript fstscriptutils fst)
 GENERATE_EXPORT_HEADER( fstfarscript
              BASE_NAME fstfarscript
              EXPORT_MACRO_NAME fstfarscript_EXPORT
-             EXPORT_FILE_NAME ${CMAKE_BINARY_DIR}/include/fst/export/fstfarscript_Export.h
-             STATIC_DEFINE fstfar_BUILT_AS_STATIC
+             EXPORT_FILE_NAME ${CMAKE_BINARY_DIR}/include/fst/exports/fstfarscript_Export.h
+             STATIC_DEFINE fstfarscript_BUILT_AS_STATIC
 )
 target_compile_definitions(fstfarscript PRIVATE fstfarscript_EXPORTS)
 target_include_directories(fstfarscript PUBLIC $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/include>
                            $<INSTALL_INTERFACE:include>)
-  else()
-    target_link_libraries(fstfarscript fstfar fstscript fst ${CMAKE_DL_LIBS})
   endif()
+    target_link_libraries(fstfarscript fstfar fstscript fst ${CMAKE_DL_LIBS})
   set_target_properties(fstfarscript PROPERTIES 
     SOVERSION "${SOVERSION}"
-    FOLDER far
   )
 
   install(TARGETS fstfarscript
@@ -64,12 +59,7 @@ if(HAVE_BIN)
   function (add_executable2 _name)
       add_executable(${ARGV})
       if (TARGET ${_name})
-        if (MSVC)
-        target_link_libraries(${_name} fstfarscript fstscriptutils fstscript fst)
-        else()
         target_link_libraries(${_name} fstfarscript fstscript fst ${CMAKE_DL_LIBS})
-        endif()
-          set_target_properties(${_name} PROPERTIES FOLDER far/bin)
       endif()
       install(TARGETS ${_name} RUNTIME DESTINATION bin)
   endfunction()

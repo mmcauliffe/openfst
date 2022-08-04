@@ -13,31 +13,17 @@
 // limitations under the License.
 //
 #include <fst/weight.h>
+#include <fst/exports/exports.h>
 
+DEFINE_string(fst_weight_separator, ",",
+            "Character separator between printed composite weights; "
+            "must be a single character");
 
-#ifdef fst_EXPORT
-
-std::string FST_FLAGS_fst_weight_separator = ",";                                            
-static FlagRegisterer<std::string>                                                 
-fst_weight_separator_flags_registerer("fst_weight_separator", FlagDescription<std::string>(&FST_FLAGS_fst_weight_separator, 
-    "Character separator between printed composite weights; "
-    "must be a single character", 
-    "std::string", 
-    __FILE__, 
-    ","));
-
-std::string FST_FLAGS_fst_weight_parentheses = "";                                            
-static FlagRegisterer<std::string>                                                 
-fst_weight_parentheses_flags_registerer("fst_weight_parentheses", FlagDescription<std::string>(&FST_FLAGS_fst_weight_parentheses, 
-    "Characters enclosing the first weight of a printed composite "
-    "weight (e.g., pair weight, tuple weight and derived classes) to "
-    "ensure proper I/O of nested composite weights; "
-    "must have size 0 (none) or 2 (open and close parenthesis)", 
-    "std::string", 
-    __FILE__, 
-    ""));
-
-#endif // fst_EXPORT
+DEFINE_string(fst_weight_parentheses, "",
+            "Characters enclosing the first weight of a printed composite "
+            "weight (e.g., pair weight, tuple weight and derived classes) to "
+            "ensure proper I/O of nested composite weights; "
+            "must have size 0 (none) or 2 (open and close parenthesis)");
 
 namespace fst {
 

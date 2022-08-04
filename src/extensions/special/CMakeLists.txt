@@ -1,16 +1,14 @@
-file(GLOB HEADER_FILES ../../include/fst/extensions/special/*.h)
 
 
 add_library(fstspecial
   phi-fst.cc
   rho-fst.cc
   sigma-fst.cc
-  ${HEADER_FILES}
 )
 GENERATE_EXPORT_HEADER( fstspecial
              BASE_NAME fstspecial
              EXPORT_MACRO_NAME fstspecial_EXPORT
-             EXPORT_FILE_NAME ${CMAKE_BINARY_DIR}/include/fst/export/fstspecial_Export.h
+             EXPORT_FILE_NAME ${CMAKE_BINARY_DIR}/include/fst/exports/fstspecial_Export.h
              STATIC_DEFINE fstspecial_BUILT_AS_STATIC
 )
 target_compile_definitions(fstspecial PRIVATE fstspecial_EXPORTS)
@@ -25,33 +23,24 @@ target_link_libraries(fstspecial
 )
 
 if(HAVE_BIN)
-  add_executable(fstspecial-bin
+  add_executable(fstspecialconvert
     ../../bin/fstconvert.cc 
     ../../bin/fstconvert-main.cc
   )
 
-  set_target_properties(fstspecial-bin PROPERTIES 
-    OUTPUT_NAME fstspecial
+  set_target_properties(fstspecialconvert PROPERTIES 
+    OUTPUT_NAME fstspecialconvert
   )
-  if (MSVC)
-    target_link_libraries(fstspecial-bin
-    fstspecial
-      fstscript
-      fstscriptutils
-      fst
-  )
- else()
-  target_link_libraries(fstspecial-bin
+  target_link_libraries(fstspecialconvert
   fstspecial
     fstscript
     fst
     ${CMAKE_DL_LIBS}
   )
- endif()
 endif(HAVE_BIN)
 
 
-install(TARGETS fstspecial fstspecial-bin
+install(TARGETS fstspecial fstspecialconvert
 LIBRARY DESTINATION lib
 ARCHIVE DESTINATION lib
 RUNTIME DESTINATION bin

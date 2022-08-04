@@ -16,10 +16,14 @@
 // finite-state transducer library.
 
 #include <fst/script/weight-class.h>
+#include <fst/generic-register.h>
 
 #include <string_view>
 
 namespace fst {
+
+
+
 namespace script {
 
 REGISTER_FST_WEIGHT(StdArc::Weight);

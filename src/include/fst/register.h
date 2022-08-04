@@ -27,6 +27,7 @@
 #include <fst/compat.h>
 #include <fst/generic-register.h>
 #include <fst/util.h>
+#include <fst/exports/exports.h>
 
 
 #include <fst/log.h>
@@ -88,11 +89,12 @@ class FstRegister : public GenericRegister<std::string, FstRegisterEntry<Arc>,
   }
 };
 
+
 // This class registers an FST type for generic reading and creating.
 // The type must have a default constructor and a copy constructor from
 // Fst<Arc>.
 template <class FST>
-class  FstRegisterer : public GenericRegisterer<FstRegister<typename FST::Arc>> {
+class FstRegisterer : public GenericRegisterer<FstRegister<typename FST::Arc>> {
  public:
   using Arc = typename FST::Arc;
   using Entry = typename FstRegister<Arc>::Entry;
@@ -101,7 +103,6 @@ class  FstRegisterer : public GenericRegisterer<FstRegister<typename FST::Arc>> 
   FstRegisterer()
       : GenericRegisterer<FstRegister<typename FST::Arc>>(FST().Type(),
                                                           BuildEntry()) {}
-
  private:
   static Fst<Arc> *ReadGeneric(std::istream &strm, const FstReadOptions &opts) {
     static_assert(std::is_base_of_v<Fst<Arc>, FST>,
@@ -125,7 +126,7 @@ class  FstRegisterer : public GenericRegisterer<FstRegister<typename FST::Arc>> 
 // REGISTER_FST(MyFst, StdArc);
 // }  // namespace example
 #define REGISTER_FST(FST, Arc) \
-  inline fst::FstRegisterer<FST<Arc>> FST##_##Arc##_registerer
+  static fst::FstRegisterer<FST<Arc>> FST##_##Arc##_registerer
 
 // Converts an FST to the specified type.
 template <class Arc>

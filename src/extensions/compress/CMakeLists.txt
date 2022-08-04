@@ -1,19 +1,16 @@
-file(GLOB HEADER_FILES ../../include/fst/extensions/compress/*.h)
 
 add_library(fstcompressscript
   compressscript.cc
-  ${HEADER_FILES}
  )
 if (MSVC)
   target_link_libraries(fstcompressscript
-    fstscriptutils
     fstscript
     fst
   )
 GENERATE_EXPORT_HEADER( fstcompressscript
              BASE_NAME fstcompressscript
              EXPORT_MACRO_NAME fstcompressscript_EXPORT
-             EXPORT_FILE_NAME ${CMAKE_BINARY_DIR}/include/fst/export/fstcompressscript_Export.h
+             EXPORT_FILE_NAME ${CMAKE_BINARY_DIR}/include/fst/exports/fstcompressscript_Export.h
              STATIC_DEFINE fstcompressscript_BUILT_AS_STATIC
 )
 target_compile_definitions(fstcompressscript PRIVATE fstcompressscript_EXPORTS)
@@ -42,7 +39,6 @@ if(HAVE_BIN)
     if (MSVC)
       target_link_libraries(fstcompress
         fstcompressscript
-        fstscriptutils
         fstscript
         fst
       )

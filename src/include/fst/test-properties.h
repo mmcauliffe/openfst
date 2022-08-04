@@ -26,6 +26,7 @@
 
 #include <fst/connect.h>
 #include <fst/dfs-visit.h>
+#include <fst/exports/exports.h>
 
 #include <unordered_set>
 

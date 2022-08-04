@@ -1,11 +1,7 @@
 function (add_executable2 _name)
     add_executable(${ARGV})
     if (TARGET ${_name})
-        if (MSVC)
-            target_link_libraries(${_name} fstscriptutils fstscript fst)
-        else()
-            target_link_libraries(${_name} fstscript fst ${CMAKE_DL_LIBS})
-        endif()
+        target_link_libraries(${_name} fstscript fst ${CMAKE_DL_LIBS})
         set_target_properties(${_name} PROPERTIES FOLDER bin)
     endif()
 

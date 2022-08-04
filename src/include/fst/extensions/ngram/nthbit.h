@@ -26,6 +26,7 @@
 
 #include <fst/compat.h>
 #include <fst/log.h>
+#include <fst/exports/exports.h>
 
 #if defined(__BMI2__)  // Intel Bit Manipulation Instruction Set 2
 // PDEP requires BMI2; this is present starting with Haswell.
@@ -72,7 +73,7 @@ extern const uint8_t kSelectInByte[2048];
 // Rank/Select Queries" by Sebastiano Vigna, p. 5, Algorithm 2, with
 // improvements from "Optimized Succinct Data Structures for Massive Data"
 // by Gog & Petri, 2014.
-inline uint32_t nth_bit(const uint64_t v, const uint32_t r) {
+inline uint32_t fstngram_EXPORT nth_bit(const uint64_t v, const uint32_t r) {
   constexpr uint64_t kOnesStep8 = 0x0101010101010101;
   constexpr uint64_t kMSBsStep8 = 0x80 * kOnesStep8;
 

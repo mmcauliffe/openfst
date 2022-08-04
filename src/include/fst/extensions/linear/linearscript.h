@@ -31,6 +31,7 @@
 #include <fst/symbol-table.h>
 #include <fst/script/arg-packs.h>
 #include <fst/script/script-impl.h>
+#include <fst/exports/exports.h>
 
 DECLARE_export_string(delimiter, fstlinearscript_EXPORT);
 DECLARE_export_string(empty_symbol, fstlinearscript_EXPORT);
@@ -46,9 +47,9 @@ using LinearCompileArgs =
                char **, int, const std::string &, const std::string &,
                const std::string &, const std::string &>;
 
-bool ValidateDelimiter();
+bool fstlinearscript_EXPORT ValidateDelimiter();
 
-bool ValidateEmptySymbol();
+bool fstlinearscript_EXPORT ValidateEmptySymbol();
 
 // Returns the proper label given the symbol. For symbols other than
 // `FST_FLAGS_start_symbol` or `FST_FLAGS_end_symbol`, looks up the symbol
@@ -125,7 +126,7 @@ bool GetModelRecord(const std::string &model, std::istream &strm,
 template <class Arc>
 void AddVocab(const std::string &vocab, SymbolTable *isyms, SymbolTable *fsyms,
               SymbolTable *osyms, LinearFstDataBuilder<Arc> *builder) {
-  std::ifstream in(vocab);
+  std::ifstream in(vocab, std::ios_base::in | std::ios_base::binary);
   if (!in) LOG(FATAL) << "Can't open file: " << vocab;
   size_t num_line = 0, num_added = 0;
   std::vector<std::string> fields;
@@ -151,7 +152,7 @@ template <class Arc>
 void AddVocab(const std::string &vocab, SymbolTable *isyms, SymbolTable *fsyms,
               SymbolTable *osyms,
               LinearClassifierFstDataBuilder<Arc> *builder) {
-  std::ifstream in(vocab);
+  std::ifstream in(vocab, std::ios_base::in | std::ios_base::binary);
   if (!in) LOG(FATAL) << "Can't open file: " << vocab;
   size_t num_line = 0, num_added = 0;
   std::vector<std::string> fields;
@@ -187,7 +188,7 @@ void AddVocab(const std::string &vocab, SymbolTable *isyms, SymbolTable *fsyms,
 template <class Arc>
 void AddModel(const std::string &model, SymbolTable *fsyms, SymbolTable *osyms,
               LinearFstDataBuilder<Arc> *builder) {
-  std::ifstream in(model);
+  std::ifstream in(model, std::ios_base::in | std::ios_base::binary);
   if (!in) LOG(FATAL) << "Can't open file: " << model;
   std::string line;
   std::getline(in, line);
@@ -241,7 +242,7 @@ void AddModel(const std::string &model, SymbolTable *fsyms, SymbolTable *osyms,
 template <class Arc>
 void AddModel(const std::string &model, SymbolTable *fsyms, SymbolTable *osyms,
               LinearClassifierFstDataBuilder<Arc> *builder) {
-  std::ifstream in(model);
+  std::ifstream in(model, std::ios_base::in | std::ios_base::binary);
   if (!in) LOG(FATAL) << "Can't open file: " << model;
   std::string line;
   std::getline(in, line);
@@ -290,8 +291,8 @@ void AddModel(const std::string &model, SymbolTable *fsyms, SymbolTable *osyms,
           << num_line << " lines.";
 }
 
-void SplitByWhitespace(const std::string &str, std::vector<std::string> *out);
-int ScanNumClasses(char **models, int models_length);
+void fstlinearscript_EXPORT SplitByWhitespace(const std::string &str, std::vector<std::string> *out);
+int fstlinearscript_EXPORT ScanNumClasses(char **models, int models_length);
 
 template <class Arc>
 void LinearCompileTpl(LinearCompileArgs *args) {
@@ -343,7 +344,7 @@ void LinearCompileTpl(LinearCompileArgs *args) {
   if (!save_osymbols.empty()) osyms.WriteText(save_osymbols);
 }
 
-void LinearCompile(const std::string &arc_type,
+void fstlinearscript_EXPORT LinearCompile(const std::string &arc_type,
                    const std::string &epsilon_symbol,
                    const std::string &unknown_symbol, const std::string &vocab,
                    char **models, int models_len, const std::string &out,
@@ -412,6 +413,7 @@ bool GetModelRecord(const std::string &model, std::istream &strm,
 
   return true;
 }
+
 
 }  // namespace script
 }  // namespace fst

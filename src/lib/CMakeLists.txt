@@ -18,7 +18,7 @@ if (MSVC)
 GENERATE_EXPORT_HEADER( fst
              BASE_NAME fst
              EXPORT_MACRO_NAME fst_EXPORT
-             EXPORT_FILE_NAME ${CMAKE_BINARY_DIR}/include/fst/export/fst_Export.h
+             EXPORT_FILE_NAME ${CMAKE_BINARY_DIR}/include/fst/exports/fst_Export.h
              STATIC_DEFINE fst_BUILT_AS_STATIC
 )
 endif()
@@ -39,8 +39,3 @@ LIBRARY DESTINATION lib
 ARCHIVE DESTINATION lib
 RUNTIME DESTINATION bin
   )
-if (MSVC)
-install(FILES
-${CMAKE_BINARY_DIR}/include/fst/export/fst_Export.h DESTINATION include/fst/export
-)
-endif()

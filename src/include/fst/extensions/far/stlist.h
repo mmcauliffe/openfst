@@ -32,10 +32,16 @@
 #include <string>
 #include <utility>
 #include <vector>
+#ifdef _WIN32
+#include <io.h>
+#endif
+#include <fcntl.h>
+#include <iostream>
 
 #include <fstream>
 #include <fst/util.h>
 #include <string_view>
+#include <fst/exports/exports.h>
 
 namespace fst {
 
@@ -118,6 +124,9 @@ class STListReader {
     for (size_t i = 0; i < sources.size(); ++i) {
       if (sources[i].empty()) {
         if (!has_stdin) {
+          #ifdef _WIN32
+            _setmode(_fileno(stdin), _O_BINARY);
+          #endif
           streams_[i] = &std::cin;
           sources_[i] = "stdin";
           has_stdin = true;
@@ -294,7 +303,7 @@ bool ReadSTListHeader(const std::string &source, Header *header) {
   return true;
 }
 
-bool IsSTList(const std::string &source);
+bool fstfar_EXPORT IsSTList(const std::string &source);
 
 }  // namespace fst
 

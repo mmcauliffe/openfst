@@ -8,7 +8,7 @@ if (MSVC)
         set_target_properties(fst_test 
                 PROPERTIES 
                         FOLDER test 
-                        ENVIRONMENT "TMPDIR=${CMAKE_BINARY_DIR}\tmp"
+                        ENVIRONMENT "TMPDIR=${CMAKE_BINARY_DIR}/tmp"
         )
 elseif (APPLE)
         set_target_properties(fst_test 
@@ -23,7 +23,7 @@ else()
                         ENVIRONMENT "LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/src/lib;${CMAKE_INSTALL_PREFIX}/lib"
         )
 endif()
-add_test(NAME fst_test_test COMMAND fst_test --tmpdir=${CMAKE_BINARY_DIR}\tmp WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/src/lib)
+add_test(NAME fst_test_test COMMAND fst_test --tmpdir=${CMAKE_BINARY_DIR}/tmp WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/src/lib)
 
 add_executable(weight_test
         weight_test.cc

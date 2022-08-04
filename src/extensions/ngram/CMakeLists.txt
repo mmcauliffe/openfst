@@ -1,10 +1,8 @@
-file(GLOB HEADER_FILES ../../include/fst/extensions/ngram/*.h)
 
 add_library(fstngram
     bitmap-index.cc 
     ngram-fst.cc 
     nthbit.cc
-    ${HEADER_FILES}
 )
 
 target_link_libraries(fstngram
@@ -13,10 +11,10 @@ target_link_libraries(fstngram
 GENERATE_EXPORT_HEADER( fstngram
              BASE_NAME fstngram
              EXPORT_MACRO_NAME fstngram_EXPORT
-             EXPORT_FILE_NAME ${CMAKE_BINARY_DIR}/include/fst/export/fstngram_Export.h
+             EXPORT_FILE_NAME ${CMAKE_BINARY_DIR}/include/fst/exports/fstngram_Export.h
              STATIC_DEFINE fstngram_BUILT_AS_STATIC
 )
-target_compile_definitions(fstngram PUBLIC fstngram_EXPORTS)
+target_compile_definitions(fstngram PRIVATE fstngram_EXPORTS)
 target_include_directories(fstngram PUBLIC $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/include>
                            $<INSTALL_INTERFACE:include>)
 
@@ -39,6 +37,9 @@ add_library(ngram_fst MODULE
 target_link_libraries(ngram_fst
     fst
 )
+target_compile_definitions(ngram_fst PRIVATE fstngram_EXPORTS)
+target_include_directories(ngram_fst PUBLIC $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/include>
+                           $<INSTALL_INTERFACE:include>)
 
 if (MSVC)
 install(TARGETS ${_name} 

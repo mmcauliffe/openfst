@@ -26,12 +26,11 @@
 #include <vector>
 
 #include <fst/flags.h>
+#include <fst/extensions/far/compile-strings.h>
 #include <fst/extensions/far/far.h>
 #include <fstream>
 #include <fst/shortest-distance.h>
 #include <fst/string.h>
-
-DECLARE_export_string(far_field_separator, fstfarscript_EXPORT);
 
 namespace fst {
 
@@ -95,7 +94,7 @@ void PrintStrings(FarReader<Arc> &reader, FarEntryType entry_type,
       }
       std::string source;
       source = source_prefix + sstrm.str() + source_suffix;
-      std::ofstream ostrm(source);
+      std::ofstream ostrm(source, std::ios_base::out | std::ios_base::binary);
       if (!ostrm) {
         LOG(ERROR) << "PrintStrings: Can't open file: " << source;
         return;

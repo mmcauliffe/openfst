@@ -26,6 +26,7 @@
 #include <string_view>
 
 #include <fst/flags.h>
+#include <fst/exports/exports.h>
 
 DECLARE_export_int32(v, fst_EXPORT);
 

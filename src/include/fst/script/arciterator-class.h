@@ -24,6 +24,8 @@
 
 #include <fst/fstlib.h>
 #include <fst/script/fst-class.h>
+#include <fst/script/script-impl.h>
+#include <fst/exports/exports.h>
 
 // Scripting API support for ArcIterator.
 //
@@ -34,7 +36,7 @@ namespace fst {
 namespace script {
 
 // Non-mutable arc iterators.
-
+    class fstscript_EXPORT ArcIteratorImplBase;
 // Virtual interface implemented by each concrete ArcIteratorImpl<F>.
 class ArcIteratorImplBase {
  public:
@@ -220,6 +222,7 @@ void InitMutableArcIteratorClass(InitMutableArcIteratorClassArgs *args) {
       std::make_unique<MutableArcIteratorClassImpl<Arc>>(fst,
                                                           std::get<1>(*args));
 }
+
 
 }  // namespace script
 }  // namespace fst

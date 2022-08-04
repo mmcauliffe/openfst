@@ -32,6 +32,8 @@ bool Compress(const FstClass &fst, const std::string &source) {
   return args.retval;
 }
 
+REGISTER_FST_OPERATION_3ARCS(Compress, CompressArgs);
+
 bool Decompress(const std::string &source, MutableFstClass *fst) {
   DecompressInnerArgs iargs(source, fst);
   DecompressArgs args(iargs);
@@ -39,10 +41,7 @@ bool Decompress(const std::string &source, MutableFstClass *fst) {
   return args.retval;
 }
 
-#ifndef _WIN32
-REGISTER_FST_OPERATION_3ARCS(Compress, CompressArgs);
-
 REGISTER_FST_OPERATION_3ARCS(Decompress, DecompressArgs);
-#endif
+
 }  // namespace script
 }  // namespace fst

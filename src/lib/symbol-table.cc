@@ -28,25 +28,13 @@
 #include <fst/util.h>
 #include <string_view>
 #include <fst/lock.h>
+#include <fst/string.h>
+#include <fst/exports/exports.h>
 
-#ifdef fst_EXPORT
-
-bool FST_FLAGS_fst_compat_symbols = true;                                            
-static FlagRegisterer<bool>                                                 
-fst_compat_symbols_flags_registerer("fst_compat_symbols", FlagDescription<bool>(&FST_FLAGS_fst_compat_symbols,
-    "Set of characters used as a separator between printed fields",
-    "bool",
-    __FILE__,
-    true));
-
-std::string FST_FLAGS_fst_field_separator = "\t ";                                            
-static FlagRegisterer<std::string>                                                 
-fst_field_separator_flags_registerer("fst_field_separator", FlagDescription<std::string>(&FST_FLAGS_fst_field_separator,
-    "Set of characters used as a separator between printed fields", 
-    "std::string",
-    __FILE__,
-    "\t "));
-#endif
+DEFINE_bool(fst_compat_symbols, true,
+            "Require symbol tables to match when appropriate");
+DEFINE_string(fst_field_separator, "\t ",
+              "Set of characters used as a separator between printed fields");
 
 namespace fst {
 
@@ -354,7 +342,7 @@ void SymbolTableImpl::ShrinkToFit() { symbols_.ShrinkToFit(); }
 
 SymbolTable *SymbolTable::ReadText(const std::string &source,
                                    const SymbolTableTextOptions &opts) {
-  std::ifstream strm(source, std::ios_base::in);
+  std::ifstream strm(source, std::ios_base::in | std::ios_base::binary);
   if (!strm.good()) {
     LOG(ERROR) << "SymbolTable::ReadText: Can't open file: " << source;
     return nullptr;
@@ -402,7 +390,7 @@ bool SymbolTable::WriteText(std::ostream &strm,
 
 bool SymbolTable::WriteText(const std::string &source) const {
   if (!source.empty()) {
-    std::ofstream strm(source);
+    std::ofstream strm(source, std::ios_base::out | std::ios_base::binary);
     if (!strm) {
       LOG(ERROR) << "SymbolTable::WriteText: Can't open file: " << source;
       return false;

@@ -27,6 +27,7 @@
 
 #include <fst/fstlib.h>
 #include <fst/util.h>
+#include <fst/exports/exports.h>
 
 namespace fst {
 

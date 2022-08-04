@@ -30,6 +30,7 @@
 #include <fst/util.h>
 #include <fst/script/fst-class.h>
 #include <string_view>
+#include <fst/exports/exports.h>
 
 namespace fst {
 

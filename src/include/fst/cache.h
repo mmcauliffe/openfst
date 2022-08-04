@@ -31,6 +31,7 @@
 #include <fst/log.h>
 
 #include <fst/vector-fst.h>
+#include <fst/exports/exports.h>
 
 #include <unordered_map>
 

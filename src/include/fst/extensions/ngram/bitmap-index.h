@@ -24,6 +24,7 @@
 
 #include <fst/compat.h>
 #include <fst/log.h>
+#include <fst/exports/exports.h>
 
 // This class is a bitstring storage class with an index that allows
 // seeking to the Nth set or clear bit in time O(Log(N)) (or
@@ -86,9 +87,12 @@
 //
 // The select indices have 6.25% overhead together.
 
+#include <fst/exports/exports.h>
 
 
 namespace fst {
+
+    class fstngram_EXPORT BitmapIndex;
 
 class BitmapIndex {
  public:

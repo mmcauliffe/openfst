@@ -27,6 +27,10 @@
 #include <cmath>
 #include <cstddef>
 #include <cstdint>
+#ifdef _WIN32
+#include <io.h>
+#endif
+#include <fcntl.h>
 #include <iostream>
 #include <memory>
 #include <sstream>
@@ -44,17 +48,19 @@
 #include <fst/register.h>
 #include <fst/symbol-table.h>
 #include <fst/util.h>
+#include <fst/exports/exports.h>
 #include <string_view>
 
 
 DECLARE_export_bool(fst_align, fst_EXPORT);
+DECLARE_export_bool(fst_verify_properties, fst_EXPORT);
 
 namespace fst {
 
 // Identifies stream data as an FST (and its endianity).
 inline constexpr int32_t kFstMagicNumber = 2125659606;
 
-class FstHeader;
+class fst_EXPORT FstHeader;
 
 template <class Arc>
 struct StateIteratorData;
@@ -65,7 +71,7 @@ struct ArcIteratorData;
 template <class Arc>
 class MatcherBase;
 
-struct FstReadOptions {
+struct fst_EXPORT FstReadOptions {
   // FileReadMode(s) are advisory, there are many conditions than prevent a
   // file from being mapped, READ mode will be selected in these cases with
   // a warning indicating why it was chosen.
@@ -98,7 +104,7 @@ struct FstReadOptions {
   std::string DebugString() const;
 };
 
-struct FstWriteOptions {
+struct fst_EXPORT FstWriteOptions {
   std::string source;   // Where you're writing to.
   bool write_header;    // Write the header?
   bool write_isymbols;  // Write input symbols?
@@ -285,6 +291,9 @@ class Fst {
       }
       return Read(strm, FstReadOptions(source));
     } else {
+        #ifdef _WIN32
+          _setmode(_fileno(stdin), _O_BINARY);
+        #endif
       return Read(std::cin, FstReadOptions("standard input"));
     }
   }
@@ -343,6 +352,9 @@ class Fst {
       }
       return true;
     } else {
+      #ifdef _WIN32
+        _setmode(_fileno(stdout), _O_BINARY);
+      #endif
       return Write(std::cout, FstWriteOptions("standard output"));
     }
   }

@@ -56,6 +56,8 @@ inline constexpr int32_t kEncodeMagicNumber = 2128178506;
 
 }  // namespace internal
 
+class fst_EXPORT EncodeTableHeader;
+
 // Header for the encoder table.
 class EncodeTableHeader {
  public:

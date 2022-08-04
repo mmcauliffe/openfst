@@ -26,6 +26,9 @@
 #include <fst/script/fst-class.h>
 #include <fst/script/weight-class.h>
 
+#include <fst/script/script-impl.h>
+#include <fst/exports/exports.h>
+
 namespace fst {
 namespace script {
 
@@ -60,7 +63,7 @@ void Disambiguate(FstDisambiguateArgs *args) {
   Disambiguate(ifst, ofst, disargs);
 }
 
-void Disambiguate(const FstClass &ifst, MutableFstClass *ofst,
+void fstscript_EXPORT Disambiguate(const FstClass &ifst, MutableFstClass *ofst,
                   const DisambiguateOptions &opts);
 
 }  // namespace script

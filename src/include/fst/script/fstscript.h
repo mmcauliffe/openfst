@@ -84,6 +84,7 @@
 #include <fst/script/topsort.h>
 #include <fst/script/union.h>
 #include <fst/script/verify.h>
+#include <fst/exports/exports.h>
 
 // This class is necessary because registering each of the operations
 // separately overfills the stack, as there's so many of them.
