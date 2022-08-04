@@ -37,7 +37,7 @@ bool ReadLabelTriples(const std::string &source,
                       std::vector<std::pair<Label, Label>> *pairs,
                       std::vector<Label> *assignments,
                       bool allow_negative = false) {
-  std::ifstream fstrm(source);
+  std::ifstream fstrm(source, std::ios_base::in | std::ios_base::binary);
   if (!fstrm) {
     LOG(ERROR) << "ReadIntTriples: Can't open file: " << source;
     return false;
@@ -80,7 +80,7 @@ bool WriteLabelTriples(const std::string &source,
     LOG(ERROR) << "WriteLabelTriples: Pairs and assignments of different sizes";
     return false;
   }
-  std::ofstream fstrm(source);
+  std::ofstream fstrm(source, std::ios_base::out | std::ios_base::binary);
   if (!fstrm) {
     LOG(ERROR) << "WriteLabelTriples: Can't open file: " << source;
     return false;

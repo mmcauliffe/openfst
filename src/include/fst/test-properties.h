@@ -26,10 +26,11 @@
 
 #include <fst/connect.h>
 #include <fst/dfs-visit.h>
+#include <fst/exports/exports.h>
 
 #include <unordered_set>
 
-DECLARE_bool(fst_verify_properties);
+DECLARE_export_bool(fst_verify_properties, fst_EXPORT);
 
 namespace fst {
 namespace internal {

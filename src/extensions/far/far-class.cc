@@ -22,7 +22,7 @@
 
 #include <fst/extensions/far/script-impl.h>
 #include <fst/arc.h>
-#include <fst/script/script-impl.h>
+#include <fst/exports/exports.h>
 
 namespace fst {
 namespace script {
@@ -56,11 +56,6 @@ std::unique_ptr<FarReaderClass> FarReaderClass::Open(
   return std::move(args.retval);
 }
 
-REGISTER_FST_OPERATION(OpenFarReaderClass, StdArc, OpenFarReaderClassArgs);
-REGISTER_FST_OPERATION(OpenFarReaderClass, LogArc, OpenFarReaderClassArgs);
-REGISTER_FST_OPERATION(OpenFarReaderClass, Log64Arc, OpenFarReaderClassArgs);
-REGISTER_FST_OPERATION(OpenFarReaderClass, ErrorArc, OpenFarReaderClassArgs);
-
 // FarWriterClass.
 
 std::unique_ptr<FarWriterClass> FarWriterClass::Create(
@@ -73,12 +68,18 @@ std::unique_ptr<FarWriterClass> FarWriterClass::Create(
   return std::move(args.retval);
 }
 
+REGISTER_FST_OPERATION(OpenFarReaderClass, StdArc, OpenFarReaderClassArgs);
+REGISTER_FST_OPERATION(OpenFarReaderClass, LogArc, OpenFarReaderClassArgs);
+REGISTER_FST_OPERATION(OpenFarReaderClass, Log64Arc, OpenFarReaderClassArgs);
+REGISTER_FST_OPERATION(OpenFarReaderClass, ErrorArc, OpenFarReaderClassArgs);
 REGISTER_FST_OPERATION(CreateFarWriterClass, StdArc, CreateFarWriterClassArgs);
 REGISTER_FST_OPERATION(CreateFarWriterClass, LogArc, CreateFarWriterClassArgs);
 REGISTER_FST_OPERATION(CreateFarWriterClass, Log64Arc,
-                       CreateFarWriterClassArgs);
+    CreateFarWriterClassArgs);
 REGISTER_FST_OPERATION(CreateFarWriterClass, ErrorArc,
-                       CreateFarWriterClassArgs);
+    CreateFarWriterClassArgs);
+
+
 
 }  // namespace script
 }  // namespace fst

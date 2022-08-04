@@ -25,16 +25,20 @@
 #include <utility>
 
 #include <fst/encode.h>
-#include <fst/generic-register.h>
 #include <fst/script/arc-class.h>
 #include <fst/script/fst-class.h>
+#include <fst/generic-register.h>
+#include <fst/exports/exports.h>
 #include <string_view>
+
+#include <fst/script/script-impl.h>
 
 // Scripting API support for EncodeMapper.
 
 namespace fst {
 namespace script {
 
+    class fstscript_EXPORT EncodeMapperImplBase;
 // Virtual interface implemented by each concrete EncodeMapperClassImpl<Arc>.
 class EncodeMapperImplBase {
  public:
@@ -259,7 +263,15 @@ class EncodeMapperClassIORegister
   std::string ConvertKeyToSoFilename(std::string_view key) const final {
     std::string legal_type(key);
     ConvertToLegalCSymbol(&legal_type);
-    legal_type.append("-arc.so");
+    legal_type.append("-arc");
+    #ifdef _WIN32
+        legal_type.append(".dll");
+    #elif defined __APPLE__
+        legal_type.append(".dylib");
+    #else
+        legal_type.append(".so");
+
+    #endif // _WIN32
     return legal_type;
   }
 };

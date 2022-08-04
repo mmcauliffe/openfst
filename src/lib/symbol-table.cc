@@ -28,6 +28,8 @@
 #include <fst/util.h>
 #include <string_view>
 #include <fst/lock.h>
+#include <fst/string.h>
+#include <fst/exports/exports.h>
 
 DEFINE_bool(fst_compat_symbols, true,
             "Require symbol tables to match when appropriate");
@@ -340,7 +342,7 @@ void SymbolTableImpl::ShrinkToFit() { symbols_.ShrinkToFit(); }
 
 SymbolTable *SymbolTable::ReadText(const std::string &source,
                                    const SymbolTableTextOptions &opts) {
-  std::ifstream strm(source, std::ios_base::in);
+  std::ifstream strm(source, std::ios_base::in | std::ios_base::binary);
   if (!strm.good()) {
     LOG(ERROR) << "SymbolTable::ReadText: Can't open file: " << source;
     return nullptr;
@@ -388,7 +390,7 @@ bool SymbolTable::WriteText(std::ostream &strm,
 
 bool SymbolTable::WriteText(const std::string &source) const {
   if (!source.empty()) {
-    std::ofstream strm(source);
+    std::ofstream strm(source, std::ios_base::out | std::ios_base::binary);
     if (!strm) {
       LOG(ERROR) << "SymbolTable::WriteText: Can't open file: " << source;
       return false;

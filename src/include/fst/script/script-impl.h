@@ -104,11 +104,12 @@
 #include <fst/log.h>
 #include <fst/generic-register.h>
 #include <fst/script/fst-class.h>
+#include <fst/exports/exports.h>
 
 namespace fst {
 namespace script {
 
-enum class RandArcSelection : uint8_t { UNIFORM, LOG_PROB, FAST_LOG_PROB };
+enum class fstscript_EXPORT RandArcSelection : uint8_t { UNIFORM, LOG_PROB, FAST_LOG_PROB };
 
 // A generic register for operations with various kinds of signatures.
 // Needed since every function signature requires a new registration class.
@@ -132,7 +133,15 @@ class GenericOperationRegister
     // Uses the old-style FST for now.
     std::string legal_type(key.second);  // The arc type.
     ConvertToLegalCSymbol(&legal_type);
-    legal_type.append("-arc.so");
+    legal_type.append("-arc");
+    #ifdef _WIN32
+        legal_type.append(".dll");
+    #elif defined __APPLE__
+        legal_type.append(".dylib");
+    #else
+        legal_type.append(".so");
+
+    #endif // _WIN32
     return legal_type;
   }
 };

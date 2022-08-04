@@ -28,6 +28,7 @@
 #include <fst/flags.h>
 #include <fst/log.h>
 #include <fst/mapped-file.h>
+#include <fst/exports/exports.h>
 #include <string_view>
 #include <optional>
 

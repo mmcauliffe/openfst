@@ -27,9 +27,11 @@
 #include <fst/const-fst.h>
 #include <fst/matcher-fst.h>
 #include <fst/matcher.h>
+#include <fst/register.h>
+#include <fst/exports/exports.h>
 
-DECLARE_int64(rho_fst_rho_label);
-DECLARE_string(rho_fst_rewrite_mode);
+DECLARE_export_int64(rho_fst_rho_label, fstspecial_EXPORT);
+DECLARE_export_string(rho_fst_rewrite_mode, fstspecial_EXPORT);
 
 namespace fst {
 namespace internal {
@@ -167,6 +169,7 @@ using OutputRhoFst =
                output_rho_fst_type>;
 
 using StdOutputRhoFst = OutputRhoFst<StdArc>;
+
 
 }  // namespace fst
 

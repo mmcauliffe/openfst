@@ -24,6 +24,9 @@
 #include <fst/push.h>
 #include <fst/script/fst-class.h>
 
+#include <fst/exports/exports.h>
+#include <fst/script/script-impl.h>
+
 namespace fst {
 namespace script {
 
@@ -56,10 +59,10 @@ void Push(FstPushArgs2 *args) {
   }
 }
 
-void Push(MutableFstClass *fst, ReweightType type = REWEIGHT_TO_INITIAL,
+void fstscript_EXPORT Push(MutableFstClass *fst, ReweightType type = REWEIGHT_TO_INITIAL,
           float delta = kShortestDelta, bool remove_total_weight = false);
 
-void Push(const FstClass &ifst, MutableFstClass *ofst, uint8_t flags,
+void fstscript_EXPORT Push(const FstClass &ifst, MutableFstClass *ofst, uint8_t flags,
           ReweightType rew_type, float delta = kShortestDelta);
 
 }  // namespace script

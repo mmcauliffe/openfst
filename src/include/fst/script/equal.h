@@ -24,6 +24,9 @@
 #include <fst/script/arg-packs.h>
 #include <fst/script/fst-class.h>
 
+#include <fst/exports/exports.h>
+#include <fst/script/script-impl.h>
+
 namespace fst {
 namespace script {
 
@@ -38,7 +41,7 @@ void Equal(FstEqualArgs *args) {
   args->retval = Equal(fst1, fst2, std::get<2>(args->args));
 }
 
-bool Equal(const FstClass &fst1, const FstClass &fst2, float delta = kDelta);
+bool fstscript_EXPORT Equal(const FstClass &fst1, const FstClass &fst2, float delta = kDelta);
 
 }  // namespace script
 }  // namespace fst

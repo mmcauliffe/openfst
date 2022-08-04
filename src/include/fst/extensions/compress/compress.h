@@ -43,6 +43,11 @@
 #include <fst/queue.h>
 #include <fst/statesort.h>
 #include <fst/visit.h>
+#ifdef _WIN32
+#include <io.h>
+#endif
+#include <fcntl.h>
+#include <iostream>
 
 namespace fst {
 
@@ -777,6 +782,11 @@ bool Decompress(const std::string &source, MutableFst<Arc> *fst) {
       return false;
     }
   }
+  #ifdef _WIN32
+  if (!fstrm.is_open()) {
+      _setmode(_fileno(stdin), _O_BINARY);
+  }
+  #endif
   std::istream &istrm = fstrm.is_open() ? fstrm : std::cin;
   Decompress(istrm, source.empty() ? "standard input" : source, fst);
   return !!istrm;

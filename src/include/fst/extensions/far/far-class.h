@@ -27,6 +27,7 @@
 #include <fst/extensions/far/far.h>
 #include <fst/script/arg-packs.h>
 #include <fst/script/fstscript.h>
+#include <fst/exports/exports.h>
 
 namespace fst {
 namespace script {
@@ -35,6 +36,7 @@ namespace script {
 
 // Virtual interface implemented by each concrete FarReaderImpl<A>.
 // See the FarReader interface in far.h for the exact semantics.
+    class fstfarscript_EXPORT FarReaderImplBase;
 class FarReaderImplBase {
  public:
   virtual const std::string &ArcType() const = 0;
@@ -89,7 +91,7 @@ class FarReaderClassImpl : public FarReaderImplBase {
   mutable std::unique_ptr<FstClass> fstc_;
 };
 
-class FarReaderClass;
+class fstfarscript_EXPORT FarReaderClass;
 
 using OpenFarReaderClassArgs =
     WithReturnValue<std::unique_ptr<FarReaderClass>,
@@ -212,7 +214,7 @@ class FarWriterClassImpl : public FarWriterImplBase {
   std::unique_ptr<FarWriter<Arc>> writer_;
 };
 
-class FarWriterClass;
+class fstfarscript_EXPORT FarWriterClass;
 
 using CreateFarWriterClassInnerArgs = std::pair<const std::string &, FarType>;
 

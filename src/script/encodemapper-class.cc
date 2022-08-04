@@ -20,6 +20,11 @@
 #include <cstdint>
 #include <memory>
 #include <string>
+#ifdef _WIN32
+#include <io.h>
+#endif
+#include <fcntl.h>
+#include <iostream>
 
 #include <fst/script/script-impl.h>
 #include <string_view>
@@ -27,6 +32,7 @@
 namespace fst {
 namespace script {
 namespace {
+
 
 // Helper methods.
 
@@ -80,6 +86,9 @@ std::unique_ptr<EncodeMapperClass> EncodeMapperClass::Read(
     std::ifstream strm(source, std::ios_base::in | std::ios_base::binary);
     return ReadEncodeMapper(strm, source);
   } else {
+    #ifdef _WIN32
+      _setmode(_fileno(stdin), _O_BINARY);
+    #endif
     return ReadEncodeMapper(std::cin, "standard input");
   }
 }

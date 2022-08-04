@@ -33,6 +33,7 @@
 #include <fstream>
 #include <fst/util.h>
 #include <string_view>
+#include <fst/exports/exports.h>
 
 namespace fst {
 
@@ -373,7 +374,7 @@ bool ReadSTTableHeader(const std::string &source, Header *header) {
   return true;
 }
 
-bool IsSTTable(const std::string &source);
+bool fstfar_EXPORT IsSTTable(const std::string &source);
 
 }  // namespace fst
 

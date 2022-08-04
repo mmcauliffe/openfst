@@ -18,10 +18,14 @@
 // Prints out binary FSTs in simple text format used by AT&T.
 
 #include <cstring>
-#include <iostream>
 #include <memory>
 #include <ostream>
 #include <string>
+#ifdef _WIN32
+#include <io.h>
+#endif
+#include <fcntl.h>
+#include <iostream>
 
 #include <fst/flags.h>
 #include <fst/log.h>
@@ -68,13 +72,18 @@ int fstprint_main(int argc, char **argv) {
   std::string dest = "standard output";
   std::ofstream fstrm;
   if (argc == 3) {
-    fstrm.open(argv[2]);
+    fstrm.open(argv[2], std::ios_base::out | std::ios_base::binary);
     if (!fstrm) {
       LOG(ERROR) << argv[0] << ": Open failed, file = " << argv[2];
       return 1;
     }
     dest = argv[2];
   }
+  #ifdef _WIN32
+  if (!fstrm.is_open()) {
+      _setmode(_fileno(stdout), _O_BINARY);
+  }
+  #endif
   std::ostream &ostrm = fstrm.is_open() ? fstrm : std::cout;
   ostrm.precision(9);
 

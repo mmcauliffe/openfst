@@ -23,6 +23,9 @@
 #include <fst/concat.h>
 #include <fst/script/fst-class.h>
 
+#include <fst/script/script-impl.h>
+#include <fst/exports/exports.h>
+
 namespace fst {
 namespace script {
 
@@ -59,11 +62,11 @@ void Concat(FstConcatArgs3 *args) {
   Concat(typed_fsts1, fst2);
 }
 
-void Concat(MutableFstClass *fst1, const FstClass &fst2);
+void fstscript_EXPORT Concat(MutableFstClass *fst1, const FstClass &fst2);
 
-void Concat(const FstClass &fst1, MutableFstClass *fst2);
+void fstscript_EXPORT Concat(const FstClass &fst1, MutableFstClass *fst2);
 
-void Concat(const std::vector<FstClass *> &fsts1, MutableFstClass *fst2);
+void fstscript_EXPORT Concat(const std::vector<FstClass *> &fsts1, MutableFstClass *fst2);
 
 }  // namespace script
 }  // namespace fst

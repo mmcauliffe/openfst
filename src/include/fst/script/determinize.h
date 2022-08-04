@@ -25,6 +25,9 @@
 #include <fst/script/fst-class.h>
 #include <fst/script/weight-class.h>
 
+#include <fst/script/script-impl.h>
+#include <fst/exports/exports.h>
+
 namespace fst {
 namespace script {
 
@@ -66,7 +69,7 @@ void Determinize(FstDeterminizeArgs *args) {
   Determinize(ifst, ofst, detargs);
 }
 
-void Determinize(const FstClass &ifst, MutableFstClass *ofst,
+void fstscript_EXPORT Determinize(const FstClass &ifst, MutableFstClass *ofst,
                  const DeterminizeOptions &opts);
 
 }  // namespace script

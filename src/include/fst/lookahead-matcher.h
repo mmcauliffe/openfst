@@ -34,9 +34,10 @@
 #include <fst/fst.h>
 #include <fst/label-reachable.h>
 #include <fst/matcher.h>
+#include <fst/exports/exports.h>
 
-DECLARE_string(save_relabel_ipairs);
-DECLARE_string(save_relabel_opairs);
+DECLARE_export_string(save_relabel_ipairs, fst_EXPORT);
+DECLARE_export_string(save_relabel_opairs, fst_EXPORT);
 
 namespace fst {
 

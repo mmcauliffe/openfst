@@ -31,6 +31,11 @@
 #include <fst/reverse.h>
 #include <fst/union.h>
 #include <string_view>
+#ifdef _WIN32
+#include <io.h>
+#endif
+#include <fcntl.h>
+#include <iostream>
 
 namespace fst {
 namespace script {
@@ -89,6 +94,9 @@ std::unique_ptr<FstClass> FstClass::Read(const std::string &source) {
     std::ifstream istrm(source, std::ios_base::in | std::ios_base::binary);
     return ReadFstClass<FstClass>(istrm, source);
   } else {
+    #ifdef _WIN32
+      _setmode(_fileno(stdin), _O_BINARY);
+    #endif
     return ReadFstClass<FstClass>(std::cin, "standard input");
   }
 }
@@ -117,6 +125,9 @@ std::unique_ptr<MutableFstClass> MutableFstClass::Read(
       std::ifstream in(source, std::ios_base::in | std::ios_base::binary);
       return ReadFstClass<MutableFstClass>(in, source);
     } else {
+        #ifdef _WIN32
+          _setmode(_fileno(stdin), _O_BINARY);
+        #endif
       return ReadFstClass<MutableFstClass>(std::cin, "standard input");
     }
   } else {  // Converts to VectorFstClass if not mutable.
@@ -138,6 +149,9 @@ std::unique_ptr<VectorFstClass> VectorFstClass::Read(
     std::ifstream in(source, std::ios_base::in | std::ios_base::binary);
     return ReadFstClass<VectorFstClass>(in, source);
   } else {
+        #ifdef _WIN32
+          _setmode(_fileno(stdin), _O_BINARY);
+        #endif
     return ReadFstClass<VectorFstClass>(std::cin, "standard input");
   }
 }

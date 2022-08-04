@@ -28,6 +28,11 @@
 #include <fst/util.h>
 #include <fst/windows_defs.inc>
 #include <string_view>
+#ifdef _WIN32
+#include <io.h>
+#endif
+#include <fcntl.h>
+#include <iostream>
 
 namespace fst {
 namespace script {
@@ -35,7 +40,7 @@ namespace script {
 // Reads vector of weights; returns true on success.
 bool ReadPotentials(std::string_view weight_type, const std::string &source,
                     std::vector<WeightClass> *potentials) {
-  std::ifstream istrm(source);
+  std::ifstream istrm(source, std::ios_base::in | std::ios_base::binary);
   if (!istrm) {
     LOG(ERROR) << "ReadPotentials: Can't open file: " << source;
     return false;
@@ -69,12 +74,17 @@ bool WritePotentials(const std::string &source,
                      const std::vector<WeightClass> &potentials) {
   std::ofstream ostrm;
   if (!source.empty()) {
-    ostrm.open(source);
+    ostrm.open(source, std::ios_base::out | std::ios_base::binary);
     if (!ostrm) {
       LOG(ERROR) << "WritePotentials: Can't open file: " << source;
       return false;
     }
   }
+  #ifdef _WIN32
+  if (!ostrm.is_open()) {
+      _setmode(_fileno(stdout), _O_BINARY);
+  }
+  #endif
   std::ostream &strm = ostrm.is_open() ? ostrm : std::cout;
   strm.precision(9);
   for (size_t s = 0; s < potentials.size(); ++s) {

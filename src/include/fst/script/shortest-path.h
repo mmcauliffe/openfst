@@ -28,12 +28,15 @@
 #include <fst/script/shortest-distance.h>
 #include <fst/script/weight-class.h>
 
+#include <fst/exports/exports.h>
+#include <fst/script/script-impl.h>
+
 namespace fst {
 namespace script {
 
 // Slightly simplified interface: `has_distance` and `first_path` are disabled.
 
-struct ShortestPathOptions : public ShortestDistanceOptions {
+struct fstscript_EXPORT ShortestPathOptions : public ShortestDistanceOptions {
   const int32_t nshortest;
   const bool unique;
   const WeightClass &weight_threshold;
@@ -134,7 +137,7 @@ void ShortestPath(FstShortestPathArgs *args) {
   internal::ShortestPath(ifst, ofst, opts);
 }
 
-void ShortestPath(const FstClass &ifst, MutableFstClass *ofst,
+void fstscript_EXPORT ShortestPath(const FstClass &ifst, MutableFstClass *ofst,
                   const ShortestPathOptions &opts);
 
 }  // namespace script

@@ -22,6 +22,11 @@
 #include <istream>
 #include <memory>
 #include <string>
+#ifdef _WIN32
+#include <io.h>
+#endif
+#include <fcntl.h>
+#include <iostream>
 
 #include <fst/flags.h>
 #include <fst/log.h>
@@ -59,13 +64,18 @@ int fstcompile_main(int argc, char **argv) {
   std::string source = "standard input";
   std::ifstream fstrm;
   if (argc > 1 && strcmp(argv[1], "-") != 0) {
-    fstrm.open(argv[1]);
+    fstrm.open(argv[1], std::ios_base::in | std::ios_base::binary);
     if (!fstrm) {
       LOG(ERROR) << argv[0] << ": Open failed, file = " << argv[1];
       return 1;
     }
     source = argv[1];
   }
+  #ifdef _WIN32
+    if (source == "standard input") {
+        _setmode(_fileno(stdin), _O_BINARY);
+    }
+  #endif
   std::istream &istrm = fstrm.is_open() ? fstrm : std::cin;
 
   const SymbolTableTextOptions opts(FST_FLAGS_allow_negative_labels);

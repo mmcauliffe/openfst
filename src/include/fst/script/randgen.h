@@ -26,6 +26,7 @@
 #include <fst/script/fst-class.h>
 #include <fst/script/script-impl.h>
 
+#include <fst/exports/exports.h>
 namespace fst {
 namespace script {
 
@@ -67,7 +68,7 @@ void RandGen(FstRandGenArgs *args) {
   }
 }
 
-void RandGen(const FstClass &ifst, MutableFstClass *ofst,
+void fstscript_EXPORT RandGen(const FstClass &ifst, MutableFstClass *ofst,
              const RandGenOptions<RandArcSelection> &opts =
                  RandGenOptions<RandArcSelection>(RandArcSelection::UNIFORM),
              uint64_t seed = std::random_device()());

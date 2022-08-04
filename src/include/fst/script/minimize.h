@@ -23,6 +23,9 @@
 #include <fst/minimize.h>
 #include <fst/script/fst-class.h>
 
+#include <fst/exports/exports.h>
+#include <fst/script/script-impl.h>
+
 namespace fst {
 namespace script {
 
@@ -37,7 +40,7 @@ void Minimize(FstMinimizeArgs *args) {
   Minimize(ofst1, ofst2, std::get<2>(*args), std::get<3>(*args));
 }
 
-void Minimize(MutableFstClass *ofst1, MutableFstClass *ofst2 = nullptr,
+void fstscript_EXPORT Minimize(MutableFstClass *ofst1, MutableFstClass *ofst2 = nullptr,
               float delta = kShortestDelta, bool allow_nondet = false);
 
 }  // namespace script

@@ -22,6 +22,9 @@
 #include <fst/script/arg-packs.h>
 #include <fst/script/fst-class.h>
 
+#include <fst/script/script-impl.h>
+#include <fst/exports/exports.h>
+
 namespace fst {
 namespace script {
 
@@ -32,7 +35,7 @@ void TopSort(FstTopSortArgs *args) {
   args->retval = TopSort(args->args->GetMutableFst<Arc>());
 }
 
-bool TopSort(MutableFstClass *fst);
+bool fstscript_EXPORT TopSort(MutableFstClass *fst);
 
 }  // namespace script
 }  // namespace fst

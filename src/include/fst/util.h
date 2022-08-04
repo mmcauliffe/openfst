@@ -39,6 +39,7 @@
 #include <fst/log.h>
 #include <fstream>
 #include <fst/mapped-file.h>
+#include <fst/exports/exports.h>
 
 #include <fst/flags.h>
 #include <unordered_map>
@@ -48,7 +49,7 @@
 
 // Utility for error handling.
 
-DECLARE_bool(fst_error_fatal);
+DECLARE_export_bool(fst_error_fatal, fst_EXPORT);
 
 #define FSTERROR()                                                     \
   LOG(LEVEL(FST_FLAGS_fst_error_fatal ? base_logging::FATAL \
@@ -314,9 +315,9 @@ std::ostream &WriteType(std::ostream &strm, const std::unordered_set<T...> &c) {
 // string should consist only of digits (no prefixes such as "0x") and an
 // optionally preceding minus. Returns a value iff the entirety of the string is
 // consumed during integer parsing, otherwise returns `std::nullopt`.
-std::optional<int64_t> ParseInt64(std::string_view s, int base = 10);
+std::optional<int64_t> fst_EXPORT ParseInt64(std::string_view s, int base = 10);
 
-int64_t StrToInt64(std::string_view s, std::string_view source, size_t nline,
+int64_t fst_EXPORT StrToInt64(std::string_view s, std::string_view source, size_t nline,
                    bool allow_negative, bool *error = nullptr);
 
 template <typename Weight>
@@ -345,7 +346,7 @@ template <typename I>
 bool ReadIntPairs(const std::string &source,
                   std::vector<std::pair<I, I>> *pairs,
                   bool allow_negative = false) {
-  std::ifstream strm(source, std::ios_base::in);
+  std::ifstream strm(source, std::ios_base::in | std::ios_base::binary);
   if (!strm) {
     LOG(ERROR) << "ReadIntPairs: Can't open file: " << source;
     return false;
@@ -380,7 +381,7 @@ bool WriteIntPairs(const std::string &source,
                    const std::vector<std::pair<I, I>> &pairs) {
   std::ofstream fstrm;
   if (!source.empty()) {
-    fstrm.open(source);
+    fstrm.open(source, std::ios_base::out | std::ios_base::binary);
     if (!fstrm) {
       LOG(ERROR) << "WriteIntPairs: Can't open file: " << source;
       return false;
@@ -410,12 +411,12 @@ bool WriteLabelPairs(const std::string &source,
 
 // Utilities for converting a type name to a legal C symbol.
 
-void ConvertToLegalCSymbol(std::string *s);
+void fst_EXPORT ConvertToLegalCSymbol(std::string *s);
 
 // Utilities for stream I/O.
 
-bool AlignInput(std::istream &strm, size_t align = MappedFile::kArchAlignment);
-bool AlignOutput(std::ostream &strm, size_t align = MappedFile::kArchAlignment);
+bool fst_EXPORT AlignInput(std::istream &strm, size_t align = MappedFile::kArchAlignment);
+bool fst_EXPORT AlignOutput(std::ostream &strm, size_t align = MappedFile::kArchAlignment);
 
 // An associative container for which testing membership is faster than an STL
 // set if members are restricted to an interval that excludes most non-members.

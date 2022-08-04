@@ -27,6 +27,7 @@
 #include <fst/compat.h>
 #include <fst/generic-register.h>
 #include <fst/util.h>
+#include <fst/exports/exports.h>
 
 
 #include <fst/log.h>
@@ -74,10 +75,20 @@ class FstRegister : public GenericRegister<std::string, FstRegisterEntry<Arc>,
   std::string ConvertKeyToSoFilename(std::string_view key) const override {
     std::string legal_type(key);
     ConvertToLegalCSymbol(&legal_type);
-    legal_type.append("-fst.so");
+    legal_type.append("-fst");
+    #ifdef _WIN32
+        legal_type.append(".dll");
+    #elif defined __APPLE__
+        legal_type.append(".dylib");
+    #else
+        legal_type.append(".so");
+
+    #endif // _WIN32
+
     return legal_type;
   }
 };
+
 
 // This class registers an FST type for generic reading and creating.
 // The type must have a default constructor and a copy constructor from
@@ -92,7 +103,6 @@ class FstRegisterer : public GenericRegisterer<FstRegister<typename FST::Arc>> {
   FstRegisterer()
       : GenericRegisterer<FstRegister<typename FST::Arc>>(FST().Type(),
                                                           BuildEntry()) {}
-
  private:
   static Fst<Arc> *ReadGeneric(std::istream &strm, const FstReadOptions &opts) {
     static_assert(std::is_base_of_v<Fst<Arc>, FST>,

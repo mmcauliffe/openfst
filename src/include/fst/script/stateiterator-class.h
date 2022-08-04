@@ -24,13 +24,16 @@
 #include <fst/fstlib.h>
 #include <fst/script/fst-class.h>
 
+#include <fst/script/script-impl.h>
+#include <fst/exports/exports.h>
+
 // Scripting API support for StateIterator.
 
 namespace fst {
 namespace script {
 
 // Virtual interface implemented by each concrete StateIteratorImpl<F>.
-class StateIteratorImplBase {
+class fstscript_EXPORT StateIteratorImplBase {
  public:
   virtual bool Done() const = 0;
   virtual int64_t Value() const = 0;
@@ -59,7 +62,7 @@ class StateIteratorClassImpl : public StateIteratorImplBase {
   StateIterator<Fst<Arc>> siter_;
 };
 
-class StateIteratorClass;
+class fstscript_EXPORT StateIteratorClass;
 
 using InitStateIteratorClassArgs =
     std::pair<const FstClass &, StateIteratorClass *>;

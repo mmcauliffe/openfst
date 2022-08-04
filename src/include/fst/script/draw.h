@@ -24,6 +24,9 @@
 #include <fst/script/draw-impl.h>
 #include <fst/script/fst-class.h>
 
+#include <fst/exports/exports.h>
+#include <fst/script/script-impl.h>
+
 namespace fst {
 namespace script {
 
@@ -62,7 +65,7 @@ void Draw(FstDrawArgs *args) {
   fstdrawer.Draw(args->ostrm, args->dest);
 }
 
-void Draw(const FstClass &fst, const SymbolTable *isyms,
+void fstscript_EXPORT Draw(const FstClass &fst, const SymbolTable *isyms,
           const SymbolTable *osyms, const SymbolTable *ssyms, bool accep,
           const std::string &title, float width, float height, bool portrait,
           bool vertical, float ranksep, float nodesep, int fontsize,

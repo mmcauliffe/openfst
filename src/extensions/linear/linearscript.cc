@@ -29,10 +29,10 @@
 #include <fst/script/script-impl.h>
 
 DEFINE_string(delimiter, "|",
-              "Single non-white-space character delimiter inside sequences of "
-              "feature symbols and output symbols");
+            "Single non-white-space character delimiter inside sequences of "
+            "feature symbols and output symbols");
 DEFINE_string(empty_symbol, "<empty>",
-              "Special symbol that designates an empty sequence");
+            "Special symbol that designates an empty sequence");
 
 DEFINE_string(start_symbol, "<s>", "Start of sentence symbol");
 DEFINE_string(end_symbol, "</s>", "End of sentence symbol");
@@ -82,7 +82,7 @@ void SplitByWhitespace(const std::string &str, std::vector<std::string> *out) {
 int ScanNumClasses(char **models, int models_len) {
   std::set<std::string> preds;
   for (int i = 0; i < models_len; ++i) {
-    std::ifstream in(models[i]);
+    std::ifstream in(models[i], std::ios_base::in | std::ios_base::binary);
     if (!in) LOG(FATAL) << "Failed to open " << models[i];
     std::string line;
     std::getline(in, line);

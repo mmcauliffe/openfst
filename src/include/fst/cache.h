@@ -31,11 +31,12 @@
 #include <fst/log.h>
 
 #include <fst/vector-fst.h>
+#include <fst/exports/exports.h>
 
 #include <unordered_map>
 
-DECLARE_bool(fst_default_cache_gc);
-DECLARE_int64(fst_default_cache_gc_limit);
+DECLARE_export_bool(fst_default_cache_gc, fst_EXPORT);
+DECLARE_export_int64(fst_default_cache_gc_limit, fst_EXPORT);
 
 namespace fst {
 

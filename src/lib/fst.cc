@@ -18,22 +18,24 @@
 // FST definitions.
 
 #include <fst/fst.h>
+#include <fst/cache.h>
+#include <fst/lookahead-matcher.h>
 
 #include <cstdint>
 #include <sstream>
 
 #include <fst/flags.h>
 #include <fst/log.h>
+#include <fst/exports/exports.h>
 
 // FST flag definitions.
-
 DEFINE_bool(fst_verify_properties, false,
             "Verify FST properties queried by TestProperties");
 
 DEFINE_bool(fst_default_cache_gc, true, "Enable garbage collection of cache");
 
 DEFINE_int64(fst_default_cache_gc_limit, 1 << 20LL,
-             "Cache byte size that triggers garbage collection");
+            "Cache byte size that triggers garbage collection");
 
 DEFINE_bool(fst_align, false, "Write FST data aligned where appropriate");
 
@@ -41,7 +43,8 @@ DEFINE_string(save_relabel_ipairs, "", "Save input relabel pairs to file");
 DEFINE_string(save_relabel_opairs, "", "Save output relabel pairs to file");
 
 DEFINE_string(fst_read_mode, "read",
-              "Default file reading mode for mappable files");
+            "Default file reading mode for mappable files");
+
 
 namespace fst {
 

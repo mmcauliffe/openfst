@@ -29,10 +29,11 @@
 
 #include <fst/expanded-fst.h>
 #include <fst/fst.h>
-#include <fst/generic-register.h>
+#include <fst/exports/exports.h>
 #include <fst/mutable-fst.h>
 #include <fst/vector-fst.h>
 #include <fst/script/arc-class.h>
+#include <fst/script/fstscript-decl.h>
 #include <fst/script/weight-class.h>
 #include <string_view>
 
@@ -51,6 +52,7 @@ namespace script {
 // implementations (of which FstClassImpl is currently the only one) and
 // FstClass serves as the base class for all interfaces.
 
+    class fstscript_EXPORT FstClassBase;
 class FstClassBase {
  public:
   virtual const std::string &ArcType() const = 0;
@@ -71,7 +73,7 @@ class FstClassBase {
 };
 
 // Adds all the MutableFst methods.
-class FstClassImplBase : public FstClassBase {
+class fstscript_EXPORT FstClassImplBase : public FstClassBase {
  public:
   virtual bool AddArc(int64_t, const ArcClass &) = 0;
   virtual int64_t AddState() = 0;
@@ -295,8 +297,6 @@ class FstClassImpl : public FstClassImplBase {
 };
 
 // BASE CLASS DEFINITIONS
-
-class MutableFstClass;
 
 class FstClass : public FstClassBase {
  public:
@@ -622,7 +622,15 @@ class FstClassIORegister
   std::string ConvertKeyToSoFilename(std::string_view key) const final {
     std::string legal_type(key);
     ConvertToLegalCSymbol(&legal_type);
-    legal_type.append("-arc.so");
+    legal_type.append("-arc");
+    #ifdef _WIN32
+        legal_type.append(".dll");
+    #elif defined __APPLE__
+        legal_type.append(".dylib");
+    #else
+        legal_type.append(".so");
+
+    #endif // _WIN32
     return legal_type;
   }
 };

@@ -29,6 +29,7 @@
 #include <fst/connect.h>
 #include <fst/dfs-visit.h>
 #include <fst/fst.h>
+#include <fst/properties.h>
 #include <fst/lookahead-matcher.h>
 #include <fst/matcher.h>
 #include <fst/queue.h>
@@ -37,6 +38,7 @@
 #include <fst/visit.h>
 #include <fst/script/arcfilter-impl.h>
 #include <string_view>
+#include <fst/exports/exports.h>
 
 namespace fst {
 
@@ -44,6 +46,7 @@ namespace fst {
 // WARNING: Stand-alone use of this class is not recommended, most code
 // should call directly the relevant library functions: Fst<Arc>::NumStates,
 // Fst<Arc>::NumArcs, TestProperties, etc.
+    class  fstscript_EXPORT FstInfo;
 class FstInfo {
  public:
   // When info_type is "short" (or "auto" and not an ExpandedFst) then only
@@ -337,10 +340,10 @@ class FstInfo {
 };
 
 // Prints `properties` to `ostrm` in a user-friendly multi-line format.
-void PrintProperties(std::ostream &ostrm, uint64_t properties);
+void fstscript_EXPORT PrintProperties(std::ostream &ostrm, uint64_t properties);
 
 // Prints `header` to `ostrm` in a user-friendly multi-line format.
-void PrintHeader(std::ostream &ostrm, const FstHeader &header);
+void fstscript_EXPORT PrintHeader(std::ostream &ostrm, const FstHeader &header);
 
 }  // namespace fst
 

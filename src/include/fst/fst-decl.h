@@ -26,14 +26,15 @@
 #include <memory>  // for allocator<>
 
 #include <fst/windows_defs.inc>
+#include <fst/exports/exports.h>
 
 namespace fst {
 
 // Symbol table and iterator.
 
-class SymbolTable;
+class fst_EXPORT SymbolTable;
 
-class SymbolTableIterator;
+class fst_EXPORT SymbolTableIterator;
 
 // Weight templates and weights.
 

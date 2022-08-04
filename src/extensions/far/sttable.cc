@@ -25,7 +25,7 @@
 namespace fst {
 
 bool IsSTTable(const std::string &source) {
-  std::ifstream strm(source);
+  std::ifstream strm(source, std::ios_base::in | std::ios_base::binary);
   if (!strm.good()) return false;
 
   int32_t magic_number = 0;

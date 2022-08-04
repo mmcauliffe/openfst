@@ -30,10 +30,11 @@
 #include <fst/util.h>
 #include <fst/weight.h>
 #include <string_view>
+#include <fst/exports/exports.h>
 
 namespace fst {
 namespace script {
-
+    class fstscript_EXPORT WeightImplBase;
 class WeightImplBase {
  public:
   virtual WeightImplBase *Copy() const = 0;
@@ -107,6 +108,8 @@ class WeightClassImpl : public WeightImplBase {
   W weight_;
 };
 
+class fstscript_EXPORT WeightClass;
+
 class WeightClass {
  public:
   WeightClass() = default;
@@ -162,15 +165,15 @@ class WeightClass {
   static bool WeightTypesMatch(const WeightClass &lhs, const WeightClass &rhs,
                                std::string_view op_name);
 
-  friend bool operator==(const WeightClass &lhs, const WeightClass &rhs);
+  friend bool fstscript_EXPORT operator==(const WeightClass &lhs, const WeightClass &rhs);
 
-  friend WeightClass Plus(const WeightClass &lhs, const WeightClass &rhs);
+  friend WeightClass fstscript_EXPORT Plus(const WeightClass &lhs, const WeightClass &rhs);
 
-  friend WeightClass Times(const WeightClass &lhs, const WeightClass &rhs);
+  friend WeightClass fstscript_EXPORT Times(const WeightClass &lhs, const WeightClass &rhs);
 
-  friend WeightClass Divide(const WeightClass &lhs, const WeightClass &rhs);
+  friend WeightClass fstscript_EXPORT Divide(const WeightClass &lhs, const WeightClass &rhs);
 
-  friend WeightClass Power(const WeightClass &w, size_t n);
+  friend WeightClass fstscript_EXPORT Power(const WeightClass &w, size_t n);
 
  private:
   const WeightImplBase *GetImpl() const { return impl_.get(); }
@@ -179,22 +182,22 @@ class WeightClass {
 
   std::unique_ptr<WeightImplBase> impl_;
 
-  friend std::ostream &operator<<(std::ostream &o, const WeightClass &c);
+  friend std::ostream fstscript_EXPORT &operator<<(std::ostream &o, const WeightClass &c);
 };
 
-bool operator==(const WeightClass &lhs, const WeightClass &rhs);
+bool fstscript_EXPORT operator==(const WeightClass &lhs, const WeightClass &rhs);
 
-bool operator!=(const WeightClass &lhs, const WeightClass &rhs);
+bool fstscript_EXPORT operator!=(const WeightClass &lhs, const WeightClass &rhs);
 
-WeightClass Plus(const WeightClass &lhs, const WeightClass &rhs);
+WeightClass fstscript_EXPORT Plus(const WeightClass &lhs, const WeightClass &rhs);
 
-WeightClass Times(const WeightClass &lhs, const WeightClass &rhs);
+WeightClass fstscript_EXPORT Times(const WeightClass &lhs, const WeightClass &rhs);
 
-WeightClass Divide(const WeightClass &lhs, const WeightClass &rhs);
+WeightClass fstscript_EXPORT Divide(const WeightClass &lhs, const WeightClass &rhs);
 
-WeightClass Power(const WeightClass &w, size_t n);
+WeightClass fstscript_EXPORT Power(const WeightClass &w, size_t n);
 
-std::ostream &operator<<(std::ostream &o, const WeightClass &c);
+std::ostream fstscript_EXPORT &operator<<(std::ostream &o, const WeightClass &c);
 
 // Registration for generic weight types.
 
@@ -220,7 +223,14 @@ class WeightClassRegister
   std::string ConvertKeyToSoFilename(std::string_view key) const final {
     std::string legal_type(key);
     ConvertToLegalCSymbol(&legal_type);
-    legal_type.append(".so");
+    #ifdef _WIN32
+        legal_type.append(".dll");
+    #elif defined __APPLE__
+        legal_type.append(".dylib");
+    #else
+        legal_type.append(".so");
+
+    #endif // _WIN32
     return legal_type;
   }
 };
@@ -240,6 +250,7 @@ using WeightClassRegisterer = GenericRegisterer<WeightClassRegister>;
 // Macro for registering new weight types; clients call this.
 #define REGISTER_FST_WEIGHT(Weight) \
   REGISTER_FST_WEIGHT_EXPANDER(Weight, __LINE__)
+
 
 }  // namespace script
 }  // namespace fst

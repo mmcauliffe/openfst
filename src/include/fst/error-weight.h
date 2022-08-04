@@ -20,12 +20,13 @@
 #include <string>
 
 #include <fst/util.h>
+#include <fst/exports/exports.h>
 
 namespace fst {
 
 // A Weight that can never be instantiated. This is not a semi-ring.
 // It is used for the arc type of empty FAR files.
-struct ErrorWeight {
+struct fst_EXPORT ErrorWeight {
   using ReverseWeight = ErrorWeight;
 
   ErrorWeight() { FSTERROR() << "ErrorWeight::ErrorWeight called"; }

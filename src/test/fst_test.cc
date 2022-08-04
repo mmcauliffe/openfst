@@ -56,6 +56,7 @@ struct CustomArc {
 
 REGISTER_FST(VectorFst, CustomArc);
 REGISTER_FST(ConstFst, CustomArc);
+
 static fst::FstRegisterer<
     CompactArcFst<StdArc, TrivialArcCompactor<StdArc>>>
     CompactFst_StdArc_TrivialCompactor_registerer;
@@ -194,8 +195,8 @@ int main(int argc, char **argv) {
       std_compact_tester.TestIO();
     }
 
-    // TODO(jrosenstock): Make this work.
 #if 0
+    // TODO(jrosenstock): Make this work.
     // Test with a default-constructed Fst, not a copied Fst.
     FstTester<CompactArcFst<CustomArc, CustomCompactor<CustomArc>>>
         empty_tester(/*num_states=*/0);
@@ -204,6 +205,7 @@ int main(int argc, char **argv) {
     empty_tester.TestExpanded(empty_fst);
     empty_tester.TestCopy(empty_fst);
     empty_tester.TestIO(empty_fst);
+
 #endif
   }
 
@@ -220,7 +222,6 @@ int main(int argc, char **argv) {
 
     // TODO(jrosenstock): Add tests on default-constructed Fst.
   }
-
   // ConstFst<StdArc, uint16_t> tests
   {
     FstTester<ConstFst<StdArc, uint16_t>> std_const_tester;

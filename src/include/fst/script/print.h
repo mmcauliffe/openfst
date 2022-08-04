@@ -25,7 +25,9 @@
 #include <fst/script/fst-class.h>
 #include <fst/script/print-impl.h>
 
-DECLARE_string(fst_field_separator);
+#include <fst/script/script-impl.h>
+#include <fst/exports/exports.h>
+
 
 namespace fst {
 namespace script {
@@ -33,7 +35,7 @@ namespace script {
 // Note: it is safe to pass these strings as references because this struct is
 // only used to pass them deeper in the call graph. Be sure you understand why
 // this is so before using this struct for anything else!
-struct FstPrintArgs {
+struct fstscript_EXPORT FstPrintArgs {
   const FstClass &fst;
   const SymbolTable *isyms;
   const SymbolTable *osyms;
@@ -55,7 +57,7 @@ void Print(FstPrintArgs *args) {
   fstprinter.Print(args->ostrm, args->dest);
 }
 
-void Print(const FstClass &fst, std::ostream &ostrm, const std::string &dest,
+void fstscript_EXPORT Print(const FstClass &fst, std::ostream &ostrm, const std::string &dest,
            const SymbolTable *isyms = nullptr,
            const SymbolTable *osyms = nullptr,
            const SymbolTable *ssyms = nullptr, bool accept = true,

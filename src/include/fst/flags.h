@@ -32,6 +32,22 @@
 
 #include <fst/lock.h>
 
+#include <fst/exports/exports.h>
+
+#define DECLARE_bool(name) extern bool FST_FLAGS_##name
+#define DECLARE_string(name) extern std::string FST_FLAGS_##name
+#define DECLARE_int32(name) extern int32_t FST_FLAGS_##name
+#define DECLARE_int64(name) extern int64_t FST_FLAGS_##name
+#define DECLARE_uint64(name) extern uint64_t FST_FLAGS_##name
+#define DECLARE_double(name) extern double FST_FLAGS_##name
+
+#define DECLARE_export_bool(name, export_macro) extern bool export_macro FST_FLAGS_##name
+#define DECLARE_export_string(name, export_macro) extern std::string export_macro FST_FLAGS_##name
+#define DECLARE_export_int32(name, export_macro) extern int32_t export_macro FST_FLAGS_##name
+#define DECLARE_export_int64(name, export_macro) extern int64_t export_macro FST_FLAGS_##name
+#define DECLARE_export_uint64(name, export_macro) extern uint64_t export_macro FST_FLAGS_##name
+#define DECLARE_export_double(name, export_macro) extern double export_macro FST_FLAGS_##name
+
 // FLAGS USAGE:
 //
 // Definition example:
@@ -49,12 +65,6 @@
 //
 // ShowUsage() can be used to print out command and flag usage.
 
-#define DECLARE_bool(name) extern bool FST_FLAGS_ ## name
-#define DECLARE_string(name) extern std::string FST_FLAGS_##name
-#define DECLARE_int32(name) extern int32_t FST_FLAGS_##name
-#define DECLARE_int64(name) extern int64_t FST_FLAGS_##name
-#define DECLARE_uint64(name) extern uint64_t FST_FLAGS_##name
-#define DECLARE_double(name) extern double FST_FLAGS_ ## name
 
 template <typename T>
 struct FlagDescription {
@@ -73,12 +83,32 @@ struct FlagDescription {
   const T default_value;
 };
 
+class FlagRegisterBase { };
+
+class FlagSingleton {
+public:
+
+    template <class RegisterType>
+    std::shared_ptr<RegisterType> GetRegister() {
+
+        std::string type_name = typeid(RegisterType).name();
+        if (registry.find(type_name) == registry.end()) {
+            std::shared_ptr<RegisterType> r = std::make_shared<RegisterType>();
+            registry[type_name] = std::static_pointer_cast <FlagRegisterBase>(r);
+        }
+        return  std::static_pointer_cast <RegisterType>(registry[type_name]);
+    }
+private:
+    std::map<std::string, std::shared_ptr<FlagRegisterBase>> registry;
+};
+
+fst_EXPORT FlagSingleton& GetFlagSingleton();
+
 template <typename T>
-class FlagRegister {
+class FlagRegister: public FlagRegisterBase {
  public:
   static FlagRegister<T> *GetRegister() {
-    static auto reg = new FlagRegister<T>;
-    return reg;
+      return GetFlagSingleton().GetRegister<FlagRegister<T>>().get();
   }
 
   const FlagDescription<T> &GetFlagDescription(const std::string &name) const {
@@ -181,8 +211,7 @@ template <typename T>
 class FlagRegisterer {
  public:
   FlagRegisterer(const std::string &name, const FlagDescription<T> &desc) {
-    auto registr = FlagRegister<T>::GetRegister();
-    registr->SetDescription(name, desc);
+    GetFlagSingleton().GetRegister<FlagRegister<T>>()->SetDescription(name, desc);
   }
 
  private:
@@ -192,9 +221,9 @@ class FlagRegisterer {
 
 
 #define DEFINE_VAR(type, name, value, doc)                                    \
-  type FST_FLAGS_ ## name = value;                                            \
+  type FST_FLAGS_##name = value;                                            \
   static FlagRegisterer<type>                                                 \
-  name ## _flags_registerer(#name, FlagDescription<type>(&FST_FLAGS_ ## name, \
+  name ##_flags_registerer(#name, FlagDescription<type>(&FST_FLAGS_##name, \
                                                          doc,                 \
                                                          #type,               \
                                                          __FILE__,            \
@@ -202,7 +231,7 @@ class FlagRegisterer {
 
 #define DEFINE_bool(name, value, doc) DEFINE_VAR(bool, name, value, doc)
 #define DEFINE_string(name, value, doc) \
-  DEFINE_VAR(std::string, name, value, doc)
+ DEFINE_VAR(std::string, name, value, doc)
 #define DEFINE_int32(name, value, doc) DEFINE_VAR(int32_t, name, value, doc)
 #define DEFINE_int64(name, value, doc) DEFINE_VAR(int64_t, name, value, doc)
 #define DEFINE_uint64(name, value, doc) DEFINE_VAR(uint64_t, name, value, doc)
@@ -210,9 +239,9 @@ class FlagRegisterer {
 
 
 // Temporary directory.
-DECLARE_string(tmpdir);
+DECLARE_export_string(tmpdir, fst_EXPORT);
 
-void SetFlags(const char *usage, int *argc, char ***argv, bool remove_flags,
+void fst_EXPORT SetFlags(const char *usage, int *argc, char ***argv, bool remove_flags,
               const char *src = "");
 
 // This is an unpleasant hack around SetFlag API.
@@ -229,6 +258,6 @@ inline void InitFst(const char *usage, int *argc, char ***argv, bool rmflags) {
   return SetFlags(usage, argc, argv, rmflags);
 }
 
-void ShowUsage(bool long_usage = true);
+void fst_EXPORT ShowUsage(bool long_usage = true);
 
 #endif  // FST_FLAGS_H_

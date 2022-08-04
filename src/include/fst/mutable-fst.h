@@ -30,6 +30,11 @@
 #include <string>
 #include <utility>
 #include <vector>
+#ifdef _WIN32
+#include <io.h>
+#endif
+#include <fcntl.h>
+#include <iostream>
 
 #include <fst/log.h>
 #include <fstream>
@@ -161,6 +166,9 @@ class MutableFst : public ExpandedFst<A> {
         }
         return Read(strm, FstReadOptions(source));
       } else {
+        #ifdef _WIN32
+          _setmode(_fileno(stdin), _O_BINARY);
+        #endif
         return Read(std::cin, FstReadOptions("standard input"));
       }
     } else {  // Converts to 'convert_type' if not mutable.

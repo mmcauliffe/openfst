@@ -23,6 +23,11 @@
 #include <iostream>
 #include <memory>
 #include <string>
+#ifdef _WIN32
+#include <io.h>
+#endif
+#include <fcntl.h>
+#include <iostream>
 
 #include <fst/flags.h>
 #include <fst/script/arcfilter-impl.h>
@@ -61,6 +66,9 @@ bool PrintHeaderInfo(const std::string &in_name) {
     }
   }
 
+  #ifdef _WIN32
+    _setmode(_fileno(stdout), _O_BINARY);
+  #endif
   fst::PrintHeader(std::cout, header);
   return true;
 }
